@@ -1,38 +1,29 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HBO Flix</title>
+    <title>HBO FLIX</title>
 
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-        }
-
-        :root {
-            --bg: #050505;
-            --purple: #8b5cf6;
-            --text: #fff;
-            --muted: #b3b3b3;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            box-sizing: border-box;
         }
 
         body {
-            background: var(--bg);
-            color: var(--text);
+            background: #141414;
+            color: white;
             font-family: Arial, Helvetica, sans-serif;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* HEADER */
+        /* =========================
+           CABEÇALHO
+        ========================= */
 
         header {
             position: fixed;
@@ -40,50 +31,45 @@
             left: 0;
             width: 100%;
             height: 68px;
-            z-index: 100;
+
             display: flex;
             align-items: center;
+
             padding: 0 4%;
+
             background: linear-gradient(
                 to bottom,
-                rgba(0,0,0,.95),
-                rgba(0,0,0,.55),
+                rgba(0,0,0,0.95),
+                rgba(0,0,0,0.65),
                 transparent
             );
-            transition: .3s;
-        }
 
-        header.scrolled {
-            background: rgba(5,5,5,.96);
-            backdrop-filter: blur(12px);
+            z-index: 1000;
         }
 
         .logo {
-            color: #a879ff;
+            color: #e50914;
             font-size: 27px;
             font-weight: 900;
-            letter-spacing: -1.5px;
+            letter-spacing: -1px;
             margin-right: 35px;
-            white-space: nowrap;
         }
 
         nav {
             display: flex;
-            gap: 23px;
-            align-items: center;
+            gap: 22px;
         }
 
-        nav a {
+        nav button {
+            background: none;
+            border: none;
             color: #ddd;
-            text-decoration: none;
             font-size: 14px;
-            transition: .2s;
+            cursor: pointer;
         }
 
-        nav a:hover,
-        nav a.active {
+        nav button:hover {
             color: white;
-            font-weight: bold;
         }
 
         .header-right {
@@ -93,411 +79,441 @@
             gap: 18px;
         }
 
-        .search-button {
-            border: 0;
-            background: transparent;
-            color: white;
-            font-size: 22px;
-            cursor: pointer;
-        }
+        /* =========================
+           BOTÃO DE PESQUISA
+        ========================= */
 
-        .profile {
-            width: 35px;
-            height: 35px;
-            border-radius: 6px;
-            background: linear-gradient(135deg, #8b5cf6, #4c1d95);
+        .search-button {
+            width: 38px;
+            height: 38px;
+
+            border: none;
+            background: transparent;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+
             cursor: pointer;
         }
 
-        /* SEARCH */
+        .search-icon {
+            width: 17px;
+            height: 17px;
 
-        .search-box {
-            position: fixed;
-            top: 68px;
-            right: 4%;
-            width: min(400px, 90%);
-            z-index: 99;
-            display: none;
-        }
+            border: 2px solid #aaa;
+            border-radius: 50%;
 
-        .search-box.show {
+            position: relative;
             display: block;
         }
 
-        .search-box input {
-            width: 100%;
-            padding: 14px 17px;
-            border-radius: 7px;
-            border: 1px solid #444;
-            background: rgba(10,10,10,.97);
+        .search-icon::after {
+            content: "";
+
+            position: absolute;
+
+            width: 8px;
+            height: 2px;
+
+            background: #aaa;
+
+            right: -6px;
+            bottom: -3px;
+
+            transform: rotate(45deg);
+
+            border-radius: 2px;
+        }
+
+        .search-button:hover .search-icon {
+            border-color: white;
+        }
+
+        .search-button:hover .search-icon::after {
+            background: white;
+        }
+
+        /* =========================
+           PERFIL
+        ========================= */
+
+        .profile-button {
+            width: 34px;
+            height: 34px;
+
+            border: none;
+            border-radius: 5px;
+
+            background: #333;
+
             color: white;
-            outline: none;
+
+            cursor: pointer;
+
             font-size: 15px;
         }
 
-        /* HERO */
+        /* =========================
+           PESQUISA
+        ========================= */
 
-        .hero {
-            min-height: 680px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 120px 7% 90px;
-            overflow: hidden;
-            background:
-                radial-gradient(
-                    circle at 75% 35%,
-                    rgba(123,63,190,.42),
-                    transparent 38%
-                ),
-                linear-gradient(
-                    90deg,
-                    #050505 0%,
-                    #070707 38%,
-                    rgba(5,5,5,.45) 72%,
-                    #050505 100%
-                );
+        .search-box {
+            position: fixed;
+
+            top: 68px;
+            right: 4%;
+
+            display: none;
+
+            z-index: 1100;
         }
 
-        .hero::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 180px;
-            background: linear-gradient(
-                transparent,
-                var(--bg)
-            );
+        .search-box input {
+            width: 280px;
+
+            padding: 13px 15px;
+
+            background: #111;
+
+            border: 1px solid #555;
+
+            color: white;
+
+            outline: none;
+
+            border-radius: 4px;
+        }
+
+        .search-box input:focus {
+            border-color: white;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            height: 620px;
+
+            display: flex;
+            align-items: flex-end;
+
+            padding: 0 5% 90px;
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    to top,
+                    #141414 0%,
+                    rgba(20,20,20,0.2) 45%,
+                    rgba(0,0,0,0.1) 100%
+                ),
+                linear-gradient(
+                    to right,
+                    #000 0%,
+                    rgba(0,0,0,0.75) 35%,
+                    rgba(0,0,0,0.15) 80%
+                ),
+                url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=2000&q=80");
+
+            background-size: cover;
+            background-position: center;
         }
 
         .hero-content {
-            max-width: 610px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-label {
-            color: #b78cff;
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 18px;
-            text-transform: uppercase;
+            max-width: 620px;
         }
 
         .hero h1 {
-            font-size: clamp(45px, 7vw, 82px);
-            line-height: .94;
-            letter-spacing: -3px;
-            margin-bottom: 22px;
+            font-size: 55px;
+            margin-bottom: 15px;
         }
 
         .hero-info {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 17px;
             color: #ddd;
-            font-size: 14px;
-        }
-
-        .age {
-            border: 1px solid #777;
-            padding: 2px 6px;
+            margin-bottom: 15px;
+            font-size: 15px;
         }
 
         .hero-description {
-            color: #c5c5c5;
+            color: #ddd;
             line-height: 1.6;
             font-size: 16px;
-            max-width: 570px;
-            margin-bottom: 27px;
+            margin-bottom: 25px;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .btn {
-            border: 0;
-            border-radius: 6px;
-            padding: 13px 23px;
-            font-weight: bold;
+        .play-button,
+        .info-button {
+            border: none;
+
+            padding: 12px 24px;
+
+            border-radius: 4px;
+
             font-size: 15px;
+            font-weight: bold;
+
             cursor: pointer;
-            transition: .2s;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
+        .play-button {
             background: white;
             color: black;
         }
 
-        .btn-secondary {
-            background: rgba(80,80,80,.7);
+        .play-button:hover {
+            background: #ddd;
+        }
+
+        .info-button {
+            background: rgba(100,100,100,0.75);
             color: white;
         }
 
-        /* SECTIONS */
+        .info-button:hover {
+            background: rgba(120,120,120,0.9);
+        }
+
+        /* =========================
+           CONTEÚDO
+        ========================= */
 
         main {
-            position: relative;
-            z-index: 3;
-            margin-top: -50px;
+            padding: 0 4% 60px;
         }
 
         .section {
-            padding: 20px 4% 30px;
+            margin-bottom: 45px;
         }
 
-        .section-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 16px;
         }
 
-        .section-title h2 {
-            font-size: 21px;
+        .movies {
+            display: grid;
+
+            grid-template-columns: repeat(
+                auto-fill,
+                minmax(160px, 1fr)
+            );
+
+            gap: 15px;
         }
 
-        .see-all {
-            color: #999;
-            font-size: 13px;
-            cursor: pointer;
-        }
+        /* =========================
+           CARDS
+        ========================= */
 
-        .row {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 7px 2px 15px;
-            scrollbar-width: none;
-        }
+        .movie-card {
+            background: #222;
 
-        .row::-webkit-scrollbar {
-            display: none;
-        }
+            border-radius: 5px;
 
-        /* CARDS */
-
-        .card {
-            flex: 0 0 180px;
-            height: 270px;
-            border-radius: 7px;
             overflow: hidden;
-            position: relative;
+
             cursor: pointer;
-            background: #151515;
-            transition: transform .25s, box-shadow .25s;
-            border: 1px solid #222;
+
+            transition:
+                transform 0.25s,
+                box-shadow 0.25s;
+
+            min-height: 290px;
         }
 
-        .card:hover {
-            transform: scale(1.045);
+        .movie-card:hover {
+            transform: scale(1.04);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.6);
+
+            position: relative;
             z-index: 5;
-            box-shadow: 0 15px 35px rgba(0,0,0,.6);
         }
 
         .poster {
             width: 100%;
-            height: 100%;
+            height: 235px;
+
             object-fit: cover;
+
             display: block;
-            background:
-                linear-gradient(
-                    145deg,
-                    #29164b,
-                    #101010
-                );
+
+            background: #333;
         }
 
         .poster-placeholder {
             width: 100%;
-            height: 100%;
+            height: 235px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 20px;
+
             background:
                 linear-gradient(
-                    145deg,
-                    #321b55,
-                    #0d0d0d
+                    135deg,
+                    #222,
+                    #444
                 );
-            color: #ddd;
+
+            color: #888;
+
+            font-size: 35px;
+        }
+
+        .movie-info {
+            padding: 10px;
+        }
+
+        .movie-title {
+            font-size: 14px;
             font-weight: bold;
-        }
 
-        .card-gradient {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 80px;
-            background: linear-gradient(
-                transparent,
-                rgba(0,0,0,.95)
-            );
-        }
-
-        .card-info {
-            position: absolute;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-        }
-
-        .card-title {
-            font-size: 13px;
-            font-weight: bold;
             white-space: nowrap;
+
             overflow: hidden;
+
             text-overflow: ellipsis;
         }
 
-        .card-year {
-            font-size: 11px;
-            color: #aaa;
-            margin-top: 4px;
-        }
-
-        /* EMPTY */
-
-        .empty {
-            display: none;
-            padding: 50px 20px;
-            text-align: center;
+        .movie-year {
             color: #999;
+
+            font-size: 12px;
+
+            margin-top: 5px;
         }
 
-        /* MODAL */
+        /* =========================
+           RESULTADO DA BUSCA
+        ========================= */
+
+        #searchResults {
+            display: none;
+        }
+
+        .no-results {
+            color: #aaa;
+            padding: 30px 0;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
 
         .modal {
-            display: none;
             position: fixed;
+
             inset: 0;
-            z-index: 500;
-            background: rgba(0,0,0,.82);
+
+            background: rgba(0,0,0,0.78);
+
+            display: none;
+
             align-items: center;
             justify-content: center;
+
+            z-index: 2000;
+
             padding: 20px;
         }
 
-        .modal.show {
-            display: flex;
-        }
+        .modal-content {
+            width: min(700px, 100%);
 
-        .modal-box {
-            width: min(900px, 100%);
-            max-height: 90vh;
-            overflow-y: auto;
-            background: #121212;
-            border: 1px solid #292929;
-            border-radius: 12px;
-            position: relative;
-            box-shadow: 0 30px 100px rgba(0,0,0,.8);
-        }
+            background: #181818;
 
-        .modal-close {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            width: 35px;
-            height: 35px;
-            border: 0;
-            border-radius: 50%;
-            background: rgba(0,0,0,.7);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 2;
+            border-radius: 7px;
+
+            overflow: hidden;
+
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
         }
 
         .modal-top {
-            min-height: 310px;
-            padding: 45px;
-            display: flex;
-            align-items: end;
+            height: 260px;
+
             background:
                 linear-gradient(
-                    90deg,
-                    #121212,
-                    rgba(18,18,18,.55),
-                    #121212
-                );
+                    to top,
+                    #181818,
+                    transparent
+                ),
+                #333;
+
+            display: flex;
+            align-items: flex-end;
+
+            padding: 25px;
         }
 
-        .modal-content {
-            max-width: 600px;
+        .modal-title {
+            font-size: 30px;
+            font-weight: bold;
         }
 
-        .modal-content h2 {
-            font-size: 40px;
-            margin-bottom: 13px;
+        .modal-body {
+            padding: 25px;
         }
 
-        .modal-content p {
-            color: #bbb;
+        .modal-description {
+            color: #ccc;
             line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        /* PROFILE MENU */
-
-        .profile-menu {
-            position: fixed;
-            top: 58px;
-            right: 4%;
-            width: 180px;
-            background: #171717;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 8px;
-            z-index: 200;
-            display: none;
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
         }
 
-        .profile-menu.show {
-            display: block;
-        }
+        .close-button {
+            position: absolute;
 
-        .profile-menu button {
-            width: 100%;
-            padding: 11px;
-            background: transparent;
-            border: 0;
+            top: 25px;
+            right: 30px;
+
+            width: 40px;
+            height: 40px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: #222;
+
             color: white;
-            text-align: left;
-            border-radius: 5px;
+
+            font-size: 20px;
+
             cursor: pointer;
         }
 
-        .profile-menu button:hover {
-            background: #282828;
+        .close-button:hover {
+            background: #444;
         }
 
-        /* RESPONSIVE */
+        /* =========================
+           RESPONSIVO
+        ========================= */
 
-        @media (max-width: 800px) {
+        @media (max-width: 700px) {
 
             header {
-                padding: 0 20px;
+                padding: 0 18px;
             }
 
             .logo {
+                font-size: 21px;
                 margin-right: 15px;
             }
 
@@ -506,26 +522,38 @@
             }
 
             .hero {
-                min-height: 620px;
-                padding: 120px 25px 80px;
+                height: 560px;
+                padding: 0 20px 60px;
             }
 
             .hero h1 {
-                letter-spacing: -2px;
+                font-size: 38px;
             }
 
-            .section {
-                padding-left: 20px;
-                padding-right: 20px;
+            .hero-description {
+                font-size: 14px;
             }
 
-            .card {
-                flex-basis: 145px;
-                height: 220px;
+            main {
+                padding: 0 18px 50px;
             }
 
-            .modal-top {
-                padding: 35px 25px;
+            .movies {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .poster,
+            .poster-placeholder {
+                height: 230px;
+            }
+
+            .search-box {
+                right: 18px;
+            }
+
+            .search-box input {
+                width: 230px;
             }
         }
     </style>
@@ -533,265 +561,289 @@
 
 <body>
 
-<header id="header">
+    <!-- =========================
+         CABEÇALHO
+    ========================= -->
 
-    <div class="logo">
-        HBO FLIX
-    </div>
+    <header>
 
-    <nav>
-        <a href="#inicio" class="active">Início</a>
-        <a href="#filmes">Filmes</a>
-        <a href="#series">Séries</a>
-        <a href="#minha-lista">Minha lista</a>
-    </nav>
-
-    <div class="header-right">
-
-        <button
-            class="search-button"
-            onclick="toggleSearch()"
-            aria-label="Pesquisar"
-        >
-            🔍
-        </button>
-
-        <div
-            class="profile"
-            id="profileButton"
-            onclick="toggleProfile()"
-        >
-            U
+        <div class="logo">
+            HBO FLIX
         </div>
 
-    </div>
+        <nav>
+            <button onclick="mostrarTodos()">
+                Início
+            </button>
 
-</header>
+            <button onclick="filtrarTipo('Filme')">
+                Filmes
+            </button>
 
-<div class="search-box" id="searchBox">
+            <button onclick="filtrarTipo('Série')">
+                Séries
+            </button>
 
-    <input
-        type="search"
-        id="searchInput"
-        placeholder="Buscar filmes e séries..."
-        oninput="searchTitles()"
-    >
+            <button onclick="mostrarMinhaLista()">
+                Minha lista
+            </button>
+        </nav>
 
-</div>
-
-<div class="profile-menu" id="profileMenu">
-
-    <button onclick="showProfile()">
-        👤 Minha conta
-    </button>
-
-    <button onclick="logout()">
-        🚪 Sair
-    </button>
-
-</div>
-
-<!-- HERO -->
-
-<section class="hero" id="inicio">
-
-    <div class="hero-content">
-
-        <div class="hero-label">
-            HBO FLIX ORIGINAL
-        </div>
-
-        <h1>
-            Seu entretenimento começa aqui.
-        </h1>
-
-        <div class="hero-info">
-            <span>2026</span>
-            <span class="age">14</span>
-            <span>Filmes e séries</span>
-        </div>
-
-        <p class="hero-description">
-            Encontre seus filmes e séries favoritos em uma experiência
-            criada para assistir em qualquer dispositivo.
-        </p>
-
-        <div class="hero-buttons">
+        <div class="header-right">
 
             <button
-                class="btn btn-primary"
-                onclick="openFeatured()"
+                class="search-button"
+                onclick="toggleSearch()"
+                aria-label="Pesquisar filmes"
+                title="Pesquisar"
             >
-                ▶ Assistir
+                <span class="search-icon"></span>
             </button>
 
             <button
-                class="btn btn-secondary"
-                onclick="addFeatured()"
+                class="profile-button"
+                onclick="mostrarPerfil()"
+                title="Perfil"
             >
-                ＋ Minha lista
+                👤
             </button>
 
         </div>
 
+    </header>
+
+    <!-- =========================
+         PESQUISA
+    ========================= -->
+
+    <div class="search-box" id="searchBox">
+
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar filmes e séries..."
+            oninput="pesquisar()"
+        >
+
     </div>
 
-</section>
+    <!-- =========================
+         DESTAQUE
+    ========================= -->
 
-<main>
+    <section class="hero">
 
-    <!-- CONTINUAR -->
+        <div class="hero-content">
 
-    <section class="section">
+            <h1 id="heroTitle">
+                HBO FLIX
+            </h1>
 
-        <div class="section-title">
-            <h2>Continuar assistindo</h2>
-        </div>
+            <div class="hero-info">
+                Filmes • Séries • Entretenimento
+            </div>
 
-        <div
-            class="row"
-            id="continueRow"
-        ></div>
+            <p class="hero-description">
+                Assista aos seus filmes e séries favoritos
+                em um só lugar.
+            </p>
 
-    </section>
-
-    <!-- POPULARES -->
-
-    <section class="section" id="filmes">
-
-        <div class="section-title">
-
-            <h2>🔥 Populares</h2>
-
-            <span class="see-all">
-                Ver tudo
-            </span>
-
-        </div>
-
-        <div
-            class="row"
-            id="popularRow"
-        ></div>
-
-    </section>
-
-    <!-- FILMES -->
-
-    <section class="section">
-
-        <div class="section-title">
-            <h2>🎬 Filmes</h2>
-        </div>
-
-        <div
-            class="row"
-            id="moviesRow"
-        ></div>
-
-    </section>
-
-    <!-- SERIES -->
-
-    <section class="section" id="series">
-
-        <div class="section-title">
-            <h2>📺 Séries</h2>
-        </div>
-
-        <div
-            class="row"
-            id="seriesRow"
-        ></div>
-
-    </section>
-
-    <!-- MINHA LISTA -->
-
-    <section class="section" id="minha-lista">
-
-        <div class="section-title">
-            <h2>❤️ Minha lista</h2>
-        </div>
-
-        <div
-            class="row"
-            id="myListRow"
-        ></div>
-
-        <div
-            class="empty"
-            id="emptyList"
-        >
-            Você ainda não adicionou títulos à sua lista.
-        </div>
-
-    </section>
-
-    <!-- BUSCA -->
-
-    <section class="section" id="searchResultsSection" style="display:none">
-
-        <div class="section-title">
-            <h2>Resultados da busca</h2>
-        </div>
-
-        <div
-            class="row"
-            id="searchResults"
-        ></div>
-
-    </section>
-
-</main>
-
-<!-- MODAL -->
-
-<div
-    class="modal"
-    id="movieModal"
-    onclick="closeModalOutside(event)"
->
-
-    <div class="modal-box">
-
-        <button
-            class="modal-close"
-            onclick="closeModal()"
-        >
-            ×
-        </button>
-
-        <div class="modal-top">
-
-            <div class="modal-content">
-
-                <h2 id="modalTitle">
-                    Título
-                </h2>
-
-                <div class="hero-info">
-                    <span id="modalYear">2026</span>
-                    <span>HD</span>
-                </div>
-
-                <p id="modalDescription">
-                    Descrição do título.
-                </p>
+            <div class="hero-buttons">
 
                 <button
-                    class="btn btn-primary"
-                    onclick="playSelected()"
+                    class="play-button"
+                    onclick="abrirDestaque()"
                 >
                     ▶ Assistir
                 </button>
 
                 <button
-                    class="btn btn-secondary"
-                    onclick="addSelected()"
+                    class="info-button"
+                    onclick="abrirDestaque()"
                 >
-                    ＋ Minha lista
+                    ⓘ Mais informações
                 </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         CONTEÚDO
+    ========================= -->
+
+    <main>
+
+        <!-- CONTINUAR -->
+
+        <section class="section">
+
+            <h2>
+                Continuar assistindo
+            </h2>
+
+            <div
+                class="movies"
+                id="continueMovies"
+            ></div>
+
+        </section>
+
+
+        <!-- POPULARES -->
+
+        <section class="section">
+
+            <h2>
+                Populares
+            </h2>
+
+            <div
+                class="movies"
+                id="popularMovies"
+            ></div>
+
+        </section>
+
+
+        <!-- FILMES -->
+
+        <section class="section">
+
+            <h2>
+                Filmes
+            </h2>
+
+            <div
+                class="movies"
+                id="movieList"
+            ></div>
+
+        </section>
+
+
+        <!-- SÉRIES -->
+
+        <section class="section">
+
+            <h2>
+                Séries
+            </h2>
+
+            <div
+                class="movies"
+                id="seriesList"
+            ></div>
+
+        </section>
+
+
+        <!-- MINHA LISTA -->
+
+        <section class="section">
+
+            <h2>
+                Minha lista
+            </h2>
+
+            <div
+                class="movies"
+                id="myList"
+            ></div>
+
+            <div
+                id="emptyList"
+                class="no-results"
+            >
+                Você ainda não adicionou nenhum título.
+            </div>
+
+        </section>
+
+
+        <!-- RESULTADOS -->
+
+        <section
+            class="section"
+            id="searchResults"
+        >
+
+            <h2>
+                Resultados da busca
+            </h2>
+
+            <div
+                class="movies"
+                id="searchMovies"
+            ></div>
+
+            <div
+                id="noResults"
+                class="no-results"
+            >
+                Nenhum título encontrado.
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         MODAL
+    ========================= -->
+
+    <div
+        class="modal"
+        id="movieModal"
+    >
+
+        <button
+            class="close-button"
+            onclick="fecharModal()"
+        >
+            ×
+        </button>
+
+        <div class="modal-content">
+
+            <div class="modal-top">
+
+                <div
+                    class="modal-title"
+                    id="modalTitle"
+                >
+                    Filme
+                </div>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p
+                    class="modal-description"
+                    id="modalDescription"
+                ></p>
+
+                <div class="modal-buttons">
+
+                    <button
+                        class="play-button"
+                        onclick="assistirSelecionado()"
+                    >
+                        ▶ Assistir
+                    </button>
+
+                    <button
+                        class="info-button"
+                        onclick="adicionarSelecionado()"
+                    >
+                        ＋ Minha lista
+                    </button>
+
+                </div>
 
             </div>
 
@@ -799,659 +851,688 @@
 
     </div>
 
-</div>
 
-<script>
+    <script>
 
-    /* =========================================
-       CONTA
-    ========================================= */
+        /* =====================================
+           CONTA
+        ===================================== */
 
-    const contaSalva =
-        localStorage.getItem("hboFlixConta");
+        const conta = localStorage.getItem("hboFlixConta");
 
-    if (!contaSalva) {
-
-        window.location.href = "index.html";
-
-    }
-
-    let conta = null;
-
-    try {
-        conta = JSON.parse(contaSalva);
-    } catch (e) {
-        window.location.href = "index.html";
-    }
-
-    if (conta) {
-
-        const inicial =
-            (conta.nome || conta.email || "U")
-            .charAt(0)
-            .toUpperCase();
-
-        document.getElementById("profileButton")
-            .textContent = inicial;
-    }
-
-
-    /* =========================================
-       CATÁLOGO
-       
-       Os objetos abaixo são exemplos de títulos.
-       Para vídeos reais, coloque URLs autorizadas
-       no campo "video".
-    ========================================= */
-
-    const catalogo = [
-
-        {
-            id: 1,
-            titulo: "Horizonte",
-            ano: 2026,
-            tipo: "filme",
-            descricao: "Uma nova aventura começa quando tudo parece perdido.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 2,
-            titulo: "Código Zero",
-            ano: 2026,
-            tipo: "filme",
-            descricao: "Um grupo precisa descobrir a origem de um misterioso código.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 3,
-            titulo: "Além do Tempo",
-            ano: 2025,
-            tipo: "filme",
-            descricao: "Uma história sobre escolhas que podem mudar o futuro.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 4,
-            titulo: "Distrito 9",
-            ano: 2025,
-            tipo: "filme",
-            descricao: "Uma cidade esconde segredos que ninguém deveria descobrir.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 5,
-            titulo: "Última Chamada",
-            ano: 2025,
-            tipo: "filme",
-            descricao: "Uma ligação inesperada muda completamente uma noite normal.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 6,
-            titulo: "A Jornada",
-            ano: 2024,
-            tipo: "filme",
-            descricao: "Uma jornada através de lugares desconhecidos.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 7,
-            titulo: "Operação Eclipse",
-            ano: 2024,
-            tipo: "filme",
-            descricao: "Uma missão secreta precisa ser concluída antes do amanhecer.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 8,
-            titulo: "Cidade Sombria",
-            ano: 2024,
-            tipo: "filme",
-            descricao: "Nada é o que parece em uma cidade cercada de mistérios.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 9,
-            titulo: "Depois da Meia-Noite",
-            ano: 2023,
-            tipo: "filme",
-            descricao: "Uma noite que ninguém conseguirá esquecer.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 10,
-            titulo: "O Último Sinal",
-            ano: 2023,
-            tipo: "filme",
-            descricao: "Um sinal misterioso aparece no céu.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 11,
-            titulo: "Conexão",
-            ano: 2026,
-            tipo: "serie",
-            descricao: "Pessoas desconhecidas acabam conectadas por um segredo.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 12,
-            titulo: "Arquivo 21",
-            ano: 2025,
-            tipo: "serie",
-            descricao: "Uma investigação revela um arquivo que deveria permanecer secreto.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 13,
-            titulo: "Nova Geração",
-            ano: 2025,
-            tipo: "serie",
-            descricao: "Uma nova geração precisa enfrentar um mundo completamente diferente.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 14,
-            titulo: "Linha Vermelha",
-            ano: 2024,
-            tipo: "serie",
-            descricao: "Uma equipe trabalha para impedir uma ameaça internacional.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 15,
-            titulo: "Segredos",
-            ano: 2024,
-            tipo: "serie",
-            descricao: "Uma família aparentemente perfeita guarda muitos segredos.",
-            poster: "",
-            video: ""
-        },
-
-        {
-            id: 16,
-            titulo: "Ponto Final",
-            ano: 2023,
-            tipo: "serie",
-            descricao: "Uma investigação chega ao seu momento decisivo.",
-            poster: "",
-            video: ""
+        if (!conta) {
+            window.location.href = "index.html";
         }
 
-    ];
+
+        /* =====================================
+           CATÁLOGO
+        ===================================== */
+
+        const catalogo = [
+
+            {
+                id: 1,
+                titulo: "Horizonte",
+                ano: 2026,
+                tipo: "Filme",
+                descricao: "Um novo começo em um mundo desconhecido.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 2,
+                titulo: "Código Zero",
+                ano: 2026,
+                tipo: "Filme",
+                descricao: "Uma missão secreta muda tudo.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 3,
+                titulo: "Além do Tempo",
+                ano: 2025,
+                tipo: "Filme",
+                descricao: "Uma aventura através do tempo.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 4,
+                titulo: "Distrito 9",
+                ano: 2025,
+                tipo: "Filme",
+                descricao: "Uma cidade dividida por um segredo.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 5,
+                titulo: "Última Chamada",
+                ano: 2025,
+                tipo: "Filme",
+                descricao: "Uma ligação pode mudar o destino.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 6,
+                titulo: "A Jornada",
+                ano: 2025,
+                tipo: "Filme",
+                descricao: "Uma viagem que ninguém esperava.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 7,
+                titulo: "Operação Eclipse",
+                ano: 2026,
+                tipo: "Filme",
+                descricao: "Uma operação perigosa começa durante um eclipse.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 8,
+                titulo: "Cidade Sombria",
+                ano: 2025,
+                tipo: "Série",
+                descricao: "Mistérios escondidos nas ruas da cidade.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 9,
+                titulo: "Depois da Meia-Noite",
+                ano: 2025,
+                tipo: "Filme",
+                descricao: "Nada é o que parece depois da meia-noite.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 10,
+                titulo: "O Último Sinal",
+                ano: 2026,
+                tipo: "Filme",
+                descricao: "Um sinal misterioso chega do espaço.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 11,
+                titulo: "Conexão",
+                ano: 2025,
+                tipo: "Série",
+                descricao: "Pessoas desconhecidas acabam conectadas.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 12,
+                titulo: "Arquivo 21",
+                ano: 2026,
+                tipo: "Série",
+                descricao: "Um arquivo escondido guarda uma verdade.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 13,
+                titulo: "Nova Geração",
+                ano: 2026,
+                tipo: "Série",
+                descricao: "Uma nova geração começa a mudar o mundo.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 14,
+                titulo: "Linha Vermelha",
+                ano: 2025,
+                tipo: "Filme",
+                descricao: "Cruzar a linha pode ter consequências.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 15,
+                titulo: "Segredos",
+                ano: 2025,
+                tipo: "Série",
+                descricao: "Todos escondem alguma coisa.",
+                poster: "",
+                video: ""
+            },
+
+            {
+                id: 16,
+                titulo: "Ponto Final",
+                ano: 2026,
+                tipo: "Filme",
+                descricao: "Tudo termina em uma última decisão.",
+                poster: "",
+                video: ""
+            }
+
+        ];
 
 
-    /* =========================================
-       GERADOR DE CARDS
-    ========================================= */
+        let filmeSelecionado = null;
 
-    function criarCard(item) {
 
-        const card =
-            document.createElement("div");
+        /* =====================================
+           CRIAR CARD
+        ===================================== */
 
-        card.className = "card";
+        function criarCard(filme) {
 
-        card.onclick = function() {
-            abrirTitulo(item.id);
-        };
+            const card = document.createElement("div");
 
-        let imagem = "";
+            card.className = "movie-card";
 
-        if (item.poster) {
+            card.onclick = function () {
+                abrirFilme(filme);
+            };
 
-            imagem =
-                `<img class="poster"
-                src="${item.poster}"
-                alt="${item.titulo}"
-                loading="lazy">`;
 
-        } else {
+            let imagem = "";
 
-            imagem =
-                `<div class="poster-placeholder">
-                    ${item.titulo}
-                </div>`;
-        }
+            if (filme.poster) {
 
-        card.innerHTML = `
-            ${imagem}
+                imagem = `
+                    <img
+                        class="poster"
+                        src="${filme.poster}"
+                        alt="${filme.titulo}"
+                    >
+                `;
 
-            <div class="card-gradient"></div>
+            } else {
 
-            <div class="card-info">
+                imagem = `
+                    <div class="poster-placeholder">
+                        ▶
+                    </div>
+                `;
 
-                <div class="card-title">
-                    ${item.titulo}
+            }
+
+
+            card.innerHTML = `
+
+                ${imagem}
+
+                <div class="movie-info">
+
+                    <div class="movie-title">
+                        ${filme.titulo}
+                    </div>
+
+                    <div class="movie-year">
+                        ${filme.ano} • ${filme.tipo}
+                    </div>
+
                 </div>
 
-                <div class="card-year">
-                    ${item.ano}
-                </div>
+            `;
 
-            </div>
-        `;
-
-        return card;
-    }
-
-
-    function preencherLinha(elementId, itens) {
-
-        const linha =
-            document.getElementById(elementId);
-
-        linha.innerHTML = "";
-
-        itens.forEach(item => {
-
-            linha.appendChild(
-                criarCard(item)
-            );
-
-        });
-    }
-
-
-    /* =========================================
-       HOME
-    ========================================= */
-
-    const populares =
-        catalogo.slice(0, 10);
-
-    const filmes =
-        catalogo.filter(
-            item => item.tipo === "filme"
-        );
-
-    const series =
-        catalogo.filter(
-            item => item.tipo === "serie"
-        );
-
-    preencherLinha(
-        "popularRow",
-        populares
-    );
-
-    preencherLinha(
-        "moviesRow",
-        filmes
-    );
-
-    preencherLinha(
-        "seriesRow",
-        series
-    );
-
-
-    /* =========================================
-       MINHA LISTA
-    ========================================= */
-
-    function getMyList() {
-
-        try {
-
-            return JSON.parse(
-                localStorage.getItem("hboFlixMinhaLista")
-            ) || [];
-
-        } catch {
-
-            return [];
+            return card;
         }
-    }
 
 
-    function updateMyList() {
+        /* =====================================
+           MOSTRAR CATÁLOGO
+        ===================================== */
 
-        const ids =
-            getMyList();
+        function carregarCatalogo(lista = catalogo) {
 
-        const items =
-            catalogo.filter(
-                item => ids.includes(item.id)
-            );
+            const filmes =
+                document.getElementById("movieList");
 
-        preencherLinha(
-            "myListRow",
-            items
-        );
+            const series =
+                document.getElementById("seriesList");
 
-        document.getElementById("emptyList")
-            .style.display =
-                items.length ? "none" : "block";
-    }
+            const populares =
+                document.getElementById("popularMovies");
+
+            filmes.innerHTML = "";
+            series.innerHTML = "";
+            populares.innerHTML = "";
 
 
-    function addToList(id) {
+            lista
+                .filter(item => item.tipo === "Filme")
+                .forEach(item => {
 
-        let lista =
-            getMyList();
+                    filmes.appendChild(
+                        criarCard(item)
+                    );
 
-        if (!lista.includes(id)) {
+                });
 
-            lista.push(id);
 
-            localStorage.setItem(
-                "hboFlixMinhaLista",
-                JSON.stringify(lista)
-            );
+            lista
+                .filter(item => item.tipo === "Série")
+                .forEach(item => {
+
+                    series.appendChild(
+                        criarCard(item)
+                    );
+
+                });
+
+
+            lista
+                .slice(0, 6)
+                .forEach(item => {
+
+                    populares.appendChild(
+                        criarCard(item)
+                    );
+
+                });
 
         }
 
-        updateMyList();
-    }
 
+        /* =====================================
+           MINHA LISTA
+        ===================================== */
 
-    function addSelected() {
+        function carregarMinhaLista() {
 
-        if (selectedMovie) {
+            const container =
+                document.getElementById("myList");
 
-            addToList(
-                selectedMovie.id
-            );
+            const empty =
+                document.getElementById("emptyList");
 
-            alert(
-                "Adicionado à sua lista."
-            );
-        }
-    }
 
+            container.innerHTML = "";
 
-    function addFeatured() {
 
-        if (catalogo.length) {
-
-            addToList(
-                catalogo[0].id
-            );
-
-            alert(
-                "Adicionado à sua lista."
-            );
-        }
-    }
-
-
-    updateMyList();
-
-
-    /* =========================================
-       MODAL
-    ========================================= */
-
-    let selectedMovie = null;
-
-    function abrirTitulo(id) {
-
-        selectedMovie =
-            catalogo.find(
-                item => item.id === id
-            );
-
-        if (!selectedMovie) return;
-
-        document.getElementById("modalTitle")
-            .textContent =
-                selectedMovie.titulo;
-
-        document.getElementById("modalYear")
-            .textContent =
-                selectedMovie.ano;
-
-        document.getElementById("modalDescription")
-            .textContent =
-                selectedMovie.descricao;
-
-        document.getElementById("movieModal")
-            .classList.add("show");
-    }
-
-
-    function closeModal() {
-
-        document.getElementById("movieModal")
-            .classList.remove("show");
-    }
-
-
-    function closeModalOutside(event) {
-
-        if (
-            event.target.id === "movieModal"
-        ) {
-
-            closeModal();
-        }
-    }
-
-
-    function openFeatured() {
-
-        if (catalogo.length) {
-
-            abrirTitulo(
-                catalogo[0].id
-            );
-        }
-    }
-
-
-    function playSelected() {
-
-        if (!selectedMovie) return;
-
-        if (!selectedMovie.video) {
-
-            alert(
-                "Este título ainda não possui um vídeo autorizado conectado."
-            );
-
-            return;
-        }
-
-        /*
-          Na próxima etapa podemos abrir
-          um player próprio aqui.
-        */
-
-        window.location.href =
-            "player.html?id=" +
-            encodeURIComponent(
-                selectedMovie.id
-            );
-    }
-
-
-    /* =========================================
-       PESQUISA
-    ========================================= */
-
-    function toggleSearch() {
-
-        const box =
-            document.getElementById("searchBox");
-
-        box.classList.toggle("show");
-
-        if (box.classList.contains("show")) {
-
-            document.getElementById("searchInput")
-                .focus();
-        }
-    }
-
-
-    function searchTitles() {
-
-        const termo =
-            document.getElementById("searchInput")
-                .value
-                .toLowerCase()
-                .trim();
-
-        const section =
-            document.getElementById(
-                "searchResultsSection"
-            );
-
-        const results =
-            document.getElementById(
-                "searchResults"
-            );
-
-        if (!termo) {
-
-            section.style.display = "none";
-
-            return;
-        }
-
-        const encontrados =
-            catalogo.filter(item =>
-                item.titulo
-                    .toLowerCase()
-                    .includes(termo)
-            );
-
-        section.style.display = "block";
-
-        results.innerHTML = "";
-
-        encontrados.forEach(item => {
-
-            results.appendChild(
-                criarCard(item)
-            );
-
-        });
-
-        section.scrollIntoView({
-            behavior: "smooth"
-        });
-    }
-
-
-    /* =========================================
-       PERFIL
-    ========================================= */
-
-    function toggleProfile() {
-
-        document.getElementById("profileMenu")
-            .classList.toggle("show");
-    }
-
-
-    function showProfile() {
-
-        if (!conta) return;
-
-        alert(
-            "Conta: " +
-            conta.email +
-            "\nNome: " +
-            conta.nome
-        );
-    }
-
-
-    function logout() {
-
-        localStorage.removeItem(
-            "hboFlixLogado"
-        );
-
-        window.location.href =
-            "index.html";
-    }
-
-
-    /* =========================================
-       HEADER AO ROLAR
-    ========================================= */
-
-    window.addEventListener(
-        "scroll",
-        function() {
-
-            const header =
-                document.getElementById(
-                    "header"
+            const ids =
+                JSON.parse(
+                    localStorage.getItem(
+                        "hboFlixMinhaLista"
+                    ) || "[]"
                 );
 
-            if (window.scrollY > 40) {
 
-                header.classList.add(
-                    "scrolled"
+            const lista =
+                catalogo.filter(
+                    filme => ids.includes(filme.id)
+                );
+
+
+            if (lista.length === 0) {
+
+                empty.style.display = "block";
+
+                return;
+
+            }
+
+
+            empty.style.display = "none";
+
+
+            lista.forEach(filme => {
+
+                container.appendChild(
+                    criarCard(filme)
+                );
+
+            });
+
+        }
+
+
+        /* =====================================
+           ABRIR FILME
+        ===================================== */
+
+        function abrirFilme(filme) {
+
+            filmeSelecionado = filme;
+
+            document.getElementById(
+                "modalTitle"
+            ).textContent = filme.titulo;
+
+
+            document.getElementById(
+                "modalDescription"
+            ).textContent =
+                filme.descricao;
+
+
+            document.getElementById(
+                "movieModal"
+            ).style.display = "flex";
+
+        }
+
+
+        /* =====================================
+           FECHAR MODAL
+        ===================================== */
+
+        function fecharModal() {
+
+            document.getElementById(
+                "movieModal"
+            ).style.display = "none";
+
+        }
+
+
+        /* =====================================
+           ASSISTIR
+        ===================================== */
+
+        function assistirSelecionado() {
+
+            if (!filmeSelecionado) {
+                return;
+            }
+
+
+            if (!filmeSelecionado.video) {
+
+                alert(
+                    "Este filme ainda não possui um vídeo conectado."
+                );
+
+                return;
+
+            }
+
+
+            window.location.href =
+                "player.html?id=" +
+                filmeSelecionado.id;
+
+        }
+
+
+        /* =====================================
+           ADICIONAR À LISTA
+        ===================================== */
+
+        function adicionarSelecionado() {
+
+            if (!filmeSelecionado) {
+                return;
+            }
+
+
+            let lista =
+                JSON.parse(
+                    localStorage.getItem(
+                        "hboFlixMinhaLista"
+                    ) || "[]"
+                );
+
+
+            if (!lista.includes(
+                filmeSelecionado.id
+            )) {
+
+                lista.push(
+                    filmeSelecionado.id
+                );
+
+                localStorage.setItem(
+                    "hboFlixMinhaLista",
+                    JSON.stringify(lista)
+                );
+
+                alert(
+                    "Adicionado à Minha Lista!"
                 );
 
             } else {
 
-                header.classList.remove(
-                    "scrolled"
+                alert(
+                    "Esse título já está na sua lista."
                 );
+
             }
+
+
+            carregarMinhaLista();
+
         }
-    );
 
 
-    /* =========================================
-       ESC
-    ========================================= */
+        /* =====================================
+           PESQUISA
+        ===================================== */
 
-    document.addEventListener(
-        "keydown",
-        function(event) {
+        function toggleSearch() {
 
-            if (event.key === "Escape") {
+            const box =
+                document.getElementById(
+                    "searchBox"
+                );
 
-                closeModal();
 
-                document
-                    .getElementById("searchBox")
-                    .classList.remove("show");
+            if (
+                box.style.display === "block"
+            ) {
 
-                document
-                    .getElementById("profileMenu")
-                    .classList.remove("show");
+                box.style.display = "none";
+
+            } else {
+
+                box.style.display = "block";
+
+                document.getElementById(
+                    "searchInput"
+                ).focus();
+
             }
-        }
-    );
 
-</script>
+        }
+
+
+        function pesquisar() {
+
+            const texto =
+                document.getElementById(
+                    "searchInput"
+                ).value
+                .toLowerCase()
+                .trim();
+
+
+            const section =
+                document.getElementById(
+                    "searchResults"
+                );
+
+            const container =
+                document.getElementById(
+                    "searchMovies"
+                );
+
+            const noResults =
+                document.getElementById(
+                    "noResults"
+                );
+
+
+            if (!texto) {
+
+                section.style.display = "none";
+
+                return;
+
+            }
+
+
+            section.style.display = "block";
+
+
+            const resultados =
+                catalogo.filter(
+                    filme =>
+                        filme.titulo
+                            .toLowerCase()
+                            .includes(texto)
+                );
+
+
+            container.innerHTML = "";
+
+
+            resultados.forEach(filme => {
+
+                container.appendChild(
+                    criarCard(filme)
+                );
+
+            });
+
+
+            if (resultados.length === 0) {
+
+                noResults.style.display =
+                    "block";
+
+            } else {
+
+                noResults.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        /* =====================================
+           FILTRAR TIPO
+        ===================================== */
+
+        function filtrarTipo(tipo) {
+
+            const lista =
+                catalogo.filter(
+                    filme => filme.tipo === tipo
+                );
+
+
+            window.scrollTo({
+                top: 600,
+                behavior: "smooth"
+            });
+
+
+            carregarCatalogo(lista);
+
+        }
+
+
+        /* =====================================
+           MOSTRAR TODOS
+        ===================================== */
+
+        function mostrarTodos() {
+
+            carregarCatalogo(catalogo);
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /* =====================================
+           MINHA LISTA
+        ===================================== */
+
+        function mostrarMinhaLista() {
+
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /* =====================================
+           PERFIL
+        ===================================== */
+
+        function mostrarPerfil() {
+
+            const dados =
+                JSON.parse(
+                    localStorage.getItem(
+                        "hboFlixConta"
+                    ) || "{}"
+                );
+
+
+            alert(
+                "Perfil\n\n" +
+                "Nome: " +
+                (dados.nome || "Usuário") +
+                "\n" +
+                "E-mail: " +
+                (dados.email || "Não informado")
+            );
+
+        }
+
+
+        /* =====================================
+           DESTAQUE
+        ===================================== */
+
+        function abrirDestaque() {
+
+            if (catalogo.length > 0) {
+
+                abrirFilme(
+                    catalogo[0]
+                );
+
+            }
+
+        }
+
+
+        /* =====================================
+           INICIAR
+        ===================================== */
+
+        carregarCatalogo();
+
+        carregarMinhaLista();
+
+    </script>
 
 </body>
 </html>
-```
