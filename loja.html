@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Minha Loja</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#07111f;
+color:#fff;
+min-height:100vh;
+}
+
+.header{
+padding:35px 20px;
+background:#0ea5e9;
+}
+
+.header-content{
+max-width:1100px;
+margin:auto;
+}
+
+.logo{
+width:80px;
+height:80px;
+object-fit:cover;
+border-radius:15px;
+background:#17263a;
+margin-bottom:15px;
+}
+
+.header h1{
+font-size:32px;
+margin-bottom:8px;
+}
+
+.header p{
+color:#e0f2fe;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:30px 20px;
+}
+
+.title{
+margin-bottom:25px;
+}
+
+.products{
+display:grid;
+grid-template-columns:
+repeat(auto-fill,minmax(220px,1fr));
+
+gap:20px;
+}
+
+.product{
+background:#0d1b2d;
+border:1px solid #1d2b40;
+border-radius:15px;
+padding:20px;
+}
+
+.product h3{
+margin-bottom:10px;
+}
+
+.category{
+color:#38bdf8;
+font-size:13px;
+margin-bottom:12px;
+}
+
+.price{
+font-size:22px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.stock{
+color:#94a3b8;
+font-size:14px;
+}
+
+.empty{
+text-align:center;
+padding:50px 20px;
+background:#0d1b2d;
+border-radius:15px;
+border:1px solid #1d2b40;
+color:#94a3b8;
+}
+
+.footer{
+text-align:center;
+padding:40px;
+color:#64748b;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header
+class="header"
+id="header">
+
+<div class="header-content">
+
+
+<img
+id="logo"
+class="logo"
+style="display:none;">
+
+
+<h1 id="nomeLoja">
+Minha Loja
+</h1>
+
+
+<p id="descricao">
+Bem-vindo à nossa loja.
+</p>
+
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="title">
+
+<h2>
+📦 Produtos
+</h2>
+
+<p
+style="color:#94a3b8;margin-top:7px;">
+
+Confira os produtos disponíveis.
+
+</p>
+
+</div>
+
+
+<div
+id="produtos"
+class="products">
+
+</div>
+
+
+</main>
+
+
+<footer class="footer">
+
+Powered by EstoquePRO
+
+</footer>
+
+
+<script>
+
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+
+const slug =
+params.get("loja");
+
+
+const loja =
+JSON.parse(
+localStorage.getItem(
+"estoqueProLoja"
+)
+);
+
+
+const produtos =
+JSON.parse(
+localStorage.getItem(
+"estoqueProProdutos"
+)
+) || [];
+
+
+if(
+!loja ||
+!slug ||
+loja.slug !== slug
+){
+
+document.getElementById(
+"nomeLoja"
+).textContent =
+"Loja não encontrada";
+
+document.getElementById(
+"descricao"
+).textContent =
+"Esta loja ainda não foi configurada.";
+
+document.getElementById(
+"produtos"
+).innerHTML = `
+
+<div class="empty">
+
+<h2>
+😕 Loja não encontrada
+</h2>
+
+<p style="margin-top:10px;">
+
+Verifique o endereço da loja.
+
+</p>
+
+</div>
+
+`;
+
+}else{
+
+
+document.title =
+loja.nome;
+
+
+document.getElementById(
+"nomeLoja"
+).textContent =
+loja.nome;
+
+
+document.getElementById(
+"descricao"
+).textContent =
+loja.descricao ||
+"Bem-vindo à nossa loja.";
+
+
+document.getElementById(
+"header"
+).style.background =
+loja.cor ||
+"#0ea5e9";
+
+
+if(loja.logo){
+
+const logo =
+document.getElementById(
+"logo"
+);
+
+logo.src =
+loja.logo;
+
+logo.style.display =
+"block";
+
+}
+
+
+const container =
+document.getElementById(
+"produtos"
+);
+
+
+const disponiveis =
+produtos.filter(
+produto =>
+Number(produto.quantidade) > 0
+);
+
+
+if(disponiveis.length === 0){
+
+container.innerHTML = `
+
+<div class="empty">
+
+<h2>
+📦 Nenhum produto disponível
+</h2>
+
+<p style="margin-top:10px;">
+
+Os produtos aparecerão aqui quando forem cadastrados.
+
+</p>
+
+</div>
+
+`;
+
+}else{
+
+
+disponiveis.forEach(
+produto => {
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"product";
+
+
+div.innerHTML = `
+
+<div class="category">
+
+${produto.categoria || "Produto"}
+
+</div>
+
+<h3>
+
+${produto.nome || "Produto"}
+
+</h3>
+
+<div class="price">
+
+R$ ${Number(
+produto.preco || 0
+).toFixed(2).replace(".",",")}
+
+</div>
+
+<div class="stock">
+
+Em estoque:
+${produto.quantidade}
+
+</div>
+
+`;
+
+
+container.appendChild(
+div
+);
+
+});
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
