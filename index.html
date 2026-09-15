@@ -250,489 +250,540 @@
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="logo">
-      <div class="logo-icon">E</div>
+  <div class="logo">
+    <div class="logo-icon">E</div>
+    <h1>Estoque<span>PRO</span></h1>
+    <p>Gestão profissional do seu estoque</p>
+  </div>
 
-      <h1>Estoque<span>PRO</span></h1>
+  <div class="card">
 
-      <p>Gestão profissional do seu estoque</p>
+    <div class="tabs">
+      <button class="tab active" id="loginTab" onclick="mostrarFormulario('login')">
+        Entrar
+      </button>
+
+      <button class="tab" id="cadastroTab" onclick="mostrarFormulario('cadastro')">
+        Criar conta
+      </button>
     </div>
 
-    <div class="card">
+    <div id="message" class="message"></div>
 
-      <div class="tabs">
-        <button
-          class="tab active"
-          id="loginTab"
-          onclick="mostrarFormulario('login')"
-        >
-          Entrar
-        </button>
+    <!-- LOGIN -->
 
-        <button
-          class="tab"
-          id="cadastroTab"
-          onclick="mostrarFormulario('cadastro')"
+    <form id="loginForm" class="form active" onsubmit="entrar(event)">
+
+      <h2>Bem-vindo de volta</h2>
+
+      <p class="subtitle">
+        Entre na sua conta para continuar.
+      </p>
+
+      <div class="field">
+        <label for="loginEmail">E-mail</label>
+
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="seu@email.com"
+          autocomplete="email"
+          required
         >
-          Criar conta
+      </div>
+
+      <div class="field">
+        <label for="loginSenha">Senha</label>
+
+        <input
+          id="loginSenha"
+          type="password"
+          placeholder="Sua senha"
+          autocomplete="current-password"
+          required
+        >
+      </div>
+
+      <div class="forgot">
+        <button type="button" onclick="recuperarSenha()">
+          Esqueci minha senha
         </button>
       </div>
 
-      <div
-        id="message"
-        class="message"
-      ></div>
+      <button id="loginButton" class="button" type="submit">
+        Entrar
+      </button>
 
-      <!-- LOGIN -->
+    </form>
 
-      <form
-        id="loginForm"
-        class="form active"
-        onsubmit="entrar(event)"
-      >
+    <!-- CADASTRO -->
 
-        <h2>Bem-vindo de volta</h2>
+    <form id="cadastroForm" class="form" onsubmit="cadastrar(event)">
 
-        <p class="subtitle">
-          Entre na sua conta para continuar.
-        </p>
+      <h2>Crie sua conta</h2>
 
-        <div class="field">
+      <p class="subtitle">
+        Comece a controlar seu estoque gratuitamente.
+      </p>
 
-          <label for="loginEmail">
-            E-mail
-          </label>
+      <div class="field">
+        <label for="nome">Seu nome</label>
 
-          <input
-            id="loginEmail"
-            type="email"
-            placeholder="seu@email.com"
-            autocomplete="email"
-            required
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label for="loginSenha">
-            Senha
-          </label>
-
-          <input
-            id="loginSenha"
-            type="password"
-            placeholder="Sua senha"
-            autocomplete="current-password"
-            required
-          >
-
-        </div>
-
-        <div class="forgot">
-
-          <button
-            type="button"
-            onclick="recuperarSenha()"
-          >
-            Esqueci minha senha
-          </button>
-
-        </div>
-
-        <button
-          id="loginButton"
-          class="button"
-          type="submit"
+        <input
+          id="nome"
+          type="text"
+          placeholder="Digite seu nome"
+          autocomplete="name"
+          required
         >
-          Entrar
-        </button>
-
-      </form>
-
-
-      <!-- CADASTRO -->
-
-      <form
-        id="cadastroForm"
-        class="form"
-        onsubmit="cadastrar(event)"
-      >
-
-        <h2>Crie sua conta</h2>
-
-        <p class="subtitle">
-          Comece a controlar seu estoque gratuitamente.
-        </p>
-
-        <div class="field">
-
-          <label for="nome">
-            Seu nome
-          </label>
-
-          <input
-            id="nome"
-            type="text"
-            placeholder="Digite seu nome"
-            autocomplete="name"
-            required
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label for="cadastroEmail">
-            E-mail
-          </label>
-
-          <input
-            id="cadastroEmail"
-            type="email"
-            placeholder="seu@email.com"
-            autocomplete="email"
-            required
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label for="cadastroSenha">
-            Senha
-          </label>
-
-          <input
-            id="cadastroSenha"
-            type="password"
-            placeholder="Mínimo de 6 caracteres"
-            minlength="6"
-            autocomplete="new-password"
-            required
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label for="confirmarSenha">
-            Confirmar senha
-          </label>
-
-          <input
-            id="confirmarSenha"
-            type="password"
-            placeholder="Digite a senha novamente"
-            minlength="6"
-            autocomplete="new-password"
-            required
-          >
-
-        </div>
-
-        <button
-          id="cadastroButton"
-          class="button"
-          type="submit"
-        >
-          Criar minha conta
-        </button>
-
-      </form>
-
-      <div class="security">
-        🔒 Seus dados são protegidos pelo Supabase
       </div>
 
-    </div>
+      <div class="field">
+        <label for="cadastroEmail">E-mail</label>
 
-    <div class="footer">
-      © 2026 EstoquePRO
+        <input
+          id="cadastroEmail"
+          type="email"
+          placeholder="seu@email.com"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="cadastroSenha">Senha</label>
+
+        <input
+          id="cadastroSenha"
+          type="password"
+          placeholder="Mínimo de 6 caracteres"
+          minlength="6"
+          autocomplete="new-password"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="confirmarSenha">Confirmar senha</label>
+
+        <input
+          id="confirmarSenha"
+          type="password"
+          placeholder="Digite a senha novamente"
+          minlength="6"
+          autocomplete="new-password"
+          required
+        >
+      </div>
+
+      <button id="cadastroButton" class="button" type="submit">
+        Criar minha conta
+      </button>
+
+    </form>
+
+    <div class="security">
+      🔒 Seus dados são protegidos pelo Supabase
     </div>
 
   </div>
 
+  <div class="footer">
+    © 2026 EstoquePRO
+  </div>
 
-  <script>
+</div>
 
-    // =========================================
-    // VERIFICAR SUPABASE
-    // =========================================
+<script>
+
+  /*
+  =====================================================
+  CONFIGURAÇÃO SUPABASE
+  =====================================================
+  */
+
+  let clienteSupabase = null;
+
+  function iniciarSupabase() {
+
+    if (typeof window.supabase === "undefined") {
+      mostrarMensagem(
+        "A biblioteca do Supabase não carregou. Atualize a página e tente novamente.",
+        "error"
+      );
+      return false;
+    }
 
     if (
-      typeof supabase === "undefined" ||
       typeof SUPABASE_URL === "undefined" ||
       typeof SUPABASE_ANON_KEY === "undefined"
     ) {
+      mostrarMensagem(
+        "O arquivo config.js não foi carregado corretamente.",
+        "error"
+      );
+      return false;
+    }
+
+    let url = String(SUPABASE_URL).trim();
+
+    let chave = String(SUPABASE_ANON_KEY).trim();
+
+    /*
+      Remove aspas extras caso tenham sido copiadas
+      acidentalmente para o config.js.
+    */
+
+    url = url.replace(/^["']|["']$/g, "");
+    chave = chave.replace(/^["']|["']$/g, "");
+
+    /*
+      Remove barras extras no final da URL.
+    */
+
+    url = url.replace(/\/+$/, "");
+
+    /*
+      A URL precisa ser uma URL HTTP/HTTPS válida.
+    */
+
+    try {
+
+      const urlValidada = new URL(url);
+
+      if (
+        urlValidada.protocol !== "https:" &&
+        urlValidada.protocol !== "http:"
+      ) {
+        throw new Error("Protocolo inválido.");
+      }
+
+      /*
+        Usa somente a origem do projeto.
+        Isso evita problemas caso tenha sido colado
+        algum caminho extra depois do .supabase.co
+      */
+
+      url = urlValidada.origin;
+
+    } catch (erro) {
 
       mostrarMensagem(
-        "O Supabase ainda não foi configurado. Verifique o arquivo config.js.",
+        "A URL do Supabase no config.js é inválida.",
         "error"
       );
 
+      console.error("SUPABASE_URL inválida:", url);
+
+      return false;
     }
 
-    const clienteSupabase = supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
+    if (!chave || chave.length < 20) {
+
+      mostrarMensagem(
+        "A chave pública do Supabase no config.js parece estar incorreta.",
+        "error"
+      );
+
+      return false;
+    }
+
+    try {
+
+      clienteSupabase =
+        window.supabase.createClient(
+          url,
+          chave
+        );
+
+      console.log("Supabase conectado:", url);
+
+      return true;
+
+    } catch (erro) {
+
+      console.error(
+        "Erro ao criar cliente Supabase:",
+        erro
+      );
+
+      mostrarMensagem(
+        "Não foi possível iniciar o Supabase.",
+        "error"
+      );
+
+      return false;
+    }
+  }
 
 
-    // =========================================
-    // SE JÁ ESTIVER LOGADO
-    // =========================================
+  /*
+  =====================================================
+  INICIAR
+  =====================================================
+  */
 
+  const supabasePronto = iniciarSupabase();
+
+  if (supabasePronto) {
     verificarSessao();
+  }
 
 
-    async function verificarSessao() {
+  /*
+  =====================================================
+  VERIFICAR SESSÃO
+  =====================================================
+  */
 
-      try {
+  async function verificarSessao() {
 
-        const {
-          data: {
-            session
-          }
-        } = await clienteSupabase.auth.getSession();
+    try {
 
-        if (session) {
+      const resultado =
+        await clienteSupabase.auth.getSession();
 
-          window.location.href = "dashboard.html";
-
-        }
-
-      } catch (erro) {
-
-        console.error(erro);
-
+      if (resultado.error) {
+        console.error(resultado.error);
+        return;
       }
 
+      const session =
+        resultado.data.session;
+
+      if (session) {
+
+        window.location.href =
+          "dashboard.html";
+      }
+
+    } catch (erro) {
+
+      console.error(
+        "Erro ao verificar sessão:",
+        erro
+      );
+    }
+  }
+
+
+  /*
+  =====================================================
+  FORMULÁRIOS
+  =====================================================
+  */
+
+  function mostrarFormulario(tipo) {
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const cadastroForm =
+      document.getElementById("cadastroForm");
+
+    const loginTab =
+      document.getElementById("loginTab");
+
+    const cadastroTab =
+      document.getElementById("cadastroTab");
+
+    limparMensagem();
+
+    if (tipo === "login") {
+
+      loginForm.classList.add("active");
+      cadastroForm.classList.remove("active");
+
+      loginTab.classList.add("active");
+      cadastroTab.classList.remove("active");
+
+    } else {
+
+      cadastroForm.classList.add("active");
+      loginForm.classList.remove("active");
+
+      cadastroTab.classList.add("active");
+      loginTab.classList.remove("active");
+    }
+  }
+
+
+  /*
+  =====================================================
+  CADASTRO
+  =====================================================
+  */
+
+  async function cadastrar(event) {
+
+    event.preventDefault();
+
+    limparMensagem();
+
+    if (!clienteSupabase) {
+      mostrarMensagem(
+        "Supabase não está conectado.",
+        "error"
+      );
+      return;
     }
 
+    const nome =
+      document.getElementById("nome").value.trim();
 
-    // =========================================
-    // TROCAR LOGIN / CADASTRO
-    // =========================================
+    const email =
+      document
+        .getElementById("cadastroEmail")
+        .value
+        .trim();
 
-    function mostrarFormulario(tipo) {
+    const senha =
+      document.getElementById("cadastroSenha").value;
 
-      const loginForm =
-        document.getElementById("loginForm");
+    const confirmarSenha =
+      document
+        .getElementById("confirmarSenha")
+        .value;
 
-      const cadastroForm =
-        document.getElementById("cadastroForm");
+    const botao =
+      document.getElementById("cadastroButton");
 
-      const loginTab =
-        document.getElementById("loginTab");
+    if (senha !== confirmarSenha) {
 
-      const cadastroTab =
-        document.getElementById("cadastroTab");
+      mostrarMensagem(
+        "As senhas não são iguais.",
+        "error"
+      );
 
-      limparMensagem();
-
-      if (tipo === "login") {
-
-        loginForm.classList.add("active");
-        cadastroForm.classList.remove("active");
-
-        loginTab.classList.add("active");
-        cadastroTab.classList.remove("active");
-
-      } else {
-
-        cadastroForm.classList.add("active");
-        loginForm.classList.remove("active");
-
-        cadastroTab.classList.add("active");
-        loginTab.classList.remove("active");
-
-      }
-
+      return;
     }
 
+    if (senha.length < 6) {
 
-    // =========================================
-    // CADASTRAR
-    // =========================================
+      mostrarMensagem(
+        "A senha precisa ter pelo menos 6 caracteres.",
+        "error"
+      );
 
-    async function cadastrar(event) {
+      return;
+    }
 
-      event.preventDefault();
+    botao.disabled = true;
+    botao.textContent = "Criando conta...";
 
-      limparMensagem();
+    try {
 
-      const nome =
-        document.getElementById("nome").value.trim();
-
-      const email =
-        document
-          .getElementById("cadastroEmail")
-          .value
-          .trim();
-
-      const senha =
-        document.getElementById("cadastroSenha").value;
-
-      const confirmarSenha =
-        document
-          .getElementById("confirmarSenha")
-          .value;
-
-      const botao =
-        document.getElementById("cadastroButton");
-
-
-      if (senha !== confirmarSenha) {
-
-        mostrarMensagem(
-          "As senhas não são iguais.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (senha.length < 6) {
-
-        mostrarMensagem(
-          "A senha precisa ter pelo menos 6 caracteres.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      botao.disabled = true;
-      botao.textContent = "Criando conta...";
-
-
-      try {
-
-        const {
-          data,
-          error
-        } = await clienteSupabase.auth.signUp({
+      const resultado =
+        await clienteSupabase.auth.signUp({
 
           email: email,
 
           password: senha,
 
           options: {
-
             data: {
               nome: nome
             }
-
           }
 
         });
 
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        /*
-          O perfil do usuário será criado
-          automaticamente pelo trigger do Supabase.
-        */
-
-
-        if (
-          data.user &&
-          data.session
-        ) {
-
-          mostrarMensagem(
-            "Conta criada com sucesso! Entrando...",
-            "success"
-          );
-
-          setTimeout(() => {
-
-            window.location.href =
-              "dashboard.html";
-
-          }, 800);
-
-        } else {
-
-          mostrarMensagem(
-            "Conta criada! Verifique seu e-mail para confirmar o cadastro antes de entrar.",
-            "success"
-          );
-
-          document
-            .getElementById("cadastroForm")
-            .reset();
-
-        }
-
-
-      } catch (erro) {
-
-        console.error(erro);
-
-        mostrarMensagem(
-          traduzirErro(erro.message),
-          "error"
-        );
-
-      } finally {
-
-        botao.disabled = false;
-        botao.textContent = "Criar minha conta";
-
+      if (resultado.error) {
+        throw resultado.error;
       }
 
+      const data = resultado.data;
+
+      if (data.session) {
+
+        mostrarMensagem(
+          "Conta criada com sucesso! Entrando...",
+          "success"
+        );
+
+        setTimeout(() => {
+          window.location.href =
+            "dashboard.html";
+        }, 700);
+
+      } else {
+
+        mostrarMensagem(
+          "Conta criada! Verifique seu e-mail para confirmar o cadastro.",
+          "success"
+        );
+
+        document
+          .getElementById("cadastroForm")
+          .reset();
+      }
+
+    } catch (erro) {
+
+      console.error(
+        "Erro no cadastro:",
+        erro
+      );
+
+      mostrarMensagem(
+        traduzirErro(erro.message),
+        "error"
+      );
+
+    } finally {
+
+      botao.disabled = false;
+      botao.textContent =
+        "Criar minha conta";
+    }
+  }
+
+
+  /*
+  =====================================================
+  LOGIN
+  =====================================================
+  */
+
+  async function entrar(event) {
+
+    event.preventDefault();
+
+    limparMensagem();
+
+    if (!clienteSupabase) {
+
+      mostrarMensagem(
+        "Supabase não está conectado. Verifique o config.js.",
+        "error"
+      );
+
+      return;
     }
 
+    const email =
+      document
+        .getElementById("loginEmail")
+        .value
+        .trim();
 
-    // =========================================
-    // LOGIN
-    // =========================================
+    const senha =
+      document
+        .getElementById("loginSenha")
+        .value;
 
-    async function entrar(event) {
+    const botao =
+      document.getElementById("loginButton");
 
-      event.preventDefault();
+    botao.disabled = true;
+    botao.textContent = "Entrando...";
 
-      limparMensagem();
+    try {
 
-      const email =
-        document
-          .getElementById("loginEmail")
-          .value
-          .trim();
-
-      const senha =
-        document
-          .getElementById("loginSenha")
-          .value;
-
-      const botao =
-        document.getElementById("loginButton");
-
-
-      botao.disabled = true;
-      botao.textContent = "Entrando...";
-
-
-      try {
-
-        const {
-          data,
-          error
-        } = await clienteSupabase.auth.signInWithPassword({
+      const resultado =
+        await clienteSupabase.auth.signInWithPassword({
 
           email: email,
 
@@ -740,86 +791,90 @@
 
         });
 
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        if (!data.session) {
-
-          throw new Error(
-            "Não foi possível criar a sessão."
-          );
-
-        }
-
-
-        mostrarMensagem(
-          "Login realizado com sucesso!",
-          "success"
-        );
-
-
-        setTimeout(() => {
-
-          window.location.href =
-            "dashboard.html";
-
-        }, 500);
-
-
-      } catch (erro) {
-
-        console.error(erro);
-
-        mostrarMensagem(
-          traduzirErro(erro.message),
-          "error"
-        );
-
-      } finally {
-
-        botao.disabled = false;
-        botao.textContent = "Entrar";
-
+      if (resultado.error) {
+        throw resultado.error;
       }
 
+      const data =
+        resultado.data;
+
+      if (!data.session) {
+
+        throw new Error(
+          "A sessão não foi criada."
+        );
+      }
+
+      mostrarMensagem(
+        "Login realizado com sucesso!",
+        "success"
+      );
+
+      setTimeout(() => {
+
+        window.location.href =
+          "dashboard.html";
+
+      }, 500);
+
+    } catch (erro) {
+
+      console.error(
+        "ERRO COMPLETO DO LOGIN:",
+        erro
+      );
+
+      mostrarMensagem(
+        traduzirErro(erro.message),
+        "error"
+      );
+
+    } finally {
+
+      botao.disabled = false;
+      botao.textContent = "Entrar";
+    }
+  }
+
+
+  /*
+  =====================================================
+  RECUPERAR SENHA
+  =====================================================
+  */
+
+  async function recuperarSenha() {
+
+    const email =
+      document
+        .getElementById("loginEmail")
+        .value
+        .trim();
+
+    if (!email) {
+
+      mostrarMensagem(
+        "Digite seu e-mail no campo acima primeiro.",
+        "error"
+      );
+
+      return;
     }
 
+    if (!clienteSupabase) {
 
-    // =========================================
-    // RECUPERAR SENHA
-    // =========================================
+      mostrarMensagem(
+        "Supabase não está conectado.",
+        "error"
+      );
 
-    async function recuperarSenha() {
+      return;
+    }
 
-      const email =
-        document
-          .getElementById("loginEmail")
-          .value
-          .trim();
+    try {
 
-
-      if (!email) {
-
-        mostrarMensagem(
-          "Digite seu e-mail no campo acima primeiro.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      try {
-
-        const {
-          error
-        } = await clienteSupabase.auth.resetPasswordForEmail(
+      const resultado =
+        await clienteSupabase.auth.resetPasswordForEmail(
           email,
           {
             redirectTo:
@@ -828,142 +883,143 @@
           }
         );
 
-
-        if (error) {
-
-          throw error;
-
-        }
-
-
-        mostrarMensagem(
-          "Se esse e-mail estiver cadastrado, enviaremos as instruções para redefinir sua senha.",
-          "success"
-        );
-
-
-      } catch (erro) {
-
-        console.error(erro);
-
-        mostrarMensagem(
-          traduzirErro(erro.message),
-          "error"
-        );
-
+      if (resultado.error) {
+        throw resultado.error;
       }
 
+      mostrarMensagem(
+        "Se esse e-mail estiver cadastrado, enviaremos as instruções para redefinir sua senha.",
+        "success"
+      );
+
+    } catch (erro) {
+
+      console.error(
+        "Erro ao recuperar senha:",
+        erro
+      );
+
+      mostrarMensagem(
+        traduzirErro(erro.message),
+        "error"
+      );
+    }
+  }
+
+
+  /*
+  =====================================================
+  MENSAGENS
+  =====================================================
+  */
+
+  function mostrarMensagem(texto, tipo) {
+
+    const elemento =
+      document.getElementById("message");
+
+    elemento.textContent =
+      texto;
+
+    elemento.className =
+      "message show " + tipo;
+  }
+
+
+  function limparMensagem() {
+
+    const elemento =
+      document.getElementById("message");
+
+    elemento.textContent = "";
+
+    elemento.className =
+      "message";
+  }
+
+
+  /*
+  =====================================================
+  TRADUZIR ERROS
+  =====================================================
+  */
+
+  function traduzirErro(mensagem) {
+
+    if (!mensagem) {
+      return "Ocorreu um erro. Tente novamente.";
     }
 
+    const texto =
+      String(mensagem).toLowerCase();
 
-    // =========================================
-    // MENSAGENS
-    // =========================================
-
-    function mostrarMensagem(texto, tipo) {
-
-      const elemento =
-        document.getElementById("message");
-
-      elemento.textContent = texto;
-
-      elemento.className =
-        "message show " + tipo;
-
+    if (
+      texto.includes(
+        "invalid login credentials"
+      )
+    ) {
+      return "E-mail ou senha incorretos.";
     }
 
-
-    function limparMensagem() {
-
-      const elemento =
-        document.getElementById("message");
-
-      elemento.textContent = "";
-
-      elemento.className =
-        "message";
-
+    if (
+      texto.includes(
+        "email not confirmed"
+      )
+    ) {
+      return "Seu e-mail ainda não foi confirmado.";
     }
 
-
-    // =========================================
-    // TRADUZIR ERROS
-    // =========================================
-
-    function traduzirErro(mensagem) {
-
-      if (!mensagem) {
-
-        return "Ocorreu um erro. Tente novamente.";
-
-      }
-
-
-      const texto =
-        mensagem.toLowerCase();
-
-
-      if (
-        texto.includes("invalid login credentials")
-      ) {
-
-        return "E-mail ou senha incorretos.";
-
-      }
-
-
-      if (
-        texto.includes("email not confirmed")
-      ) {
-
-        return "Seu e-mail ainda não foi confirmado. Verifique sua caixa de entrada.";
-
-      }
-
-
-      if (
-        texto.includes("user already registered")
-      ) {
-
-        return "Este e-mail já possui uma conta.";
-
-      }
-
-
-      if (
-        texto.includes("password should be at least")
-      ) {
-
-        return "A senha precisa ter pelo menos 6 caracteres.";
-
-      }
-
-
-      if (
-        texto.includes("rate limit")
-      ) {
-
-        return "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
-
-      }
-
-
-      if (
-        texto.includes("email")
-        &&
-        texto.includes("invalid")
-      ) {
-
-        return "Digite um e-mail válido.";
-
-      }
-
-
-      return mensagem;
-
+    if (
+      texto.includes(
+        "user already registered"
+      )
+    ) {
+      return "Este e-mail já possui uma conta.";
     }
 
-  </script>
+    if (
+      texto.includes(
+        "password should be at least"
+      )
+    ) {
+      return "A senha precisa ter pelo menos 6 caracteres.";
+    }
+
+    if (
+      texto.includes(
+        "rate limit"
+      )
+    ) {
+      return "Muitas tentativas. Aguarde alguns minutos.";
+    }
+
+    if (
+      texto.includes("invalid") &&
+      texto.includes("email")
+    ) {
+      return "Digite um e-mail válido.";
+    }
+
+    if (
+      texto.includes(
+        "invalid path specified in request url"
+      )
+    ) {
+      return "A conexão com o Supabase está usando uma URL inválida. Verifique o Project URL no config.js.";
+    }
+
+    if (
+      texto.includes(
+        "failed to fetch"
+      )
+    ) {
+      return "Não foi possível conectar ao Supabase.";
+    }
+
+    return mensagem;
+  }
+
+</script>
 
 </body>
 </html>
