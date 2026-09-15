@@ -1,349 +1,627 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HBO FLIX - Entrar</title>
+    <meta charset="UTF-8">
 
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-body {
-    min-height: 100vh;
-    background:
-        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.85)),
-        #111;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    <title>EstoquePRO — Login</title>
 
-.box {
-    width: 100%;
-    max-width: 420px;
-    padding: 35px;
-    background: rgba(20,20,20,.95);
-    border-radius: 8px;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.logo {
-    text-align: center;
-    color: #e50914;
-    font-size: 32px;
-    font-weight: 900;
-    margin-bottom: 30px;
-}
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top,
+                    #18233d 0%,
+                    #080b13 45%,
+                    #05060a 100%
+                );
+            color: #ffffff;
+            padding: 20px;
+        }
 
-h1 {
-    font-size: 28px;
-    margin-bottom: 25px;
-}
+        .container {
+            width: 100%;
+            max-width: 430px;
+        }
 
-input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 14px;
-    background: #333;
-    border: 1px solid #555;
-    border-radius: 4px;
-    color: white;
-    outline: none;
-}
+        .logo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
 
-input:focus {
-    border-color: white;
-}
+        .logo-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 14px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            font-size: 27px;
+            font-weight: 900;
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.3);
+        }
 
-button {
-    width: 100%;
-    padding: 14px;
-    border: 0;
-    border-radius: 4px;
-    background: #e50914;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
+        .logo h1 {
+            font-size: 30px;
+            letter-spacing: -1px;
+        }
 
-button:hover {
-    background: #f6121d;
-}
+        .logo span {
+            color: #60a5fa;
+        }
 
-.switch {
-    margin-top: 20px;
-    color: #aaa;
-    text-align: center;
-}
+        .logo p {
+            margin-top: 8px;
+            color: #9ca3af;
+            font-size: 14px;
+        }
 
-.switch span {
-    color: white;
-    cursor: pointer;
-}
+        .card {
+            background: rgba(15, 19, 30, 0.94);
+            border: 1px solid #222a3a;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+        }
 
-.error {
-    color: #ff5c5c;
-    margin-bottom: 15px;
-    display: none;
-}
+        .tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            padding: 5px;
+            background: #090c14;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
 
-.success {
-    color: #4ade80;
-    margin-bottom: 15px;
-    display: none;
-}
+        .tab {
+            border: none;
+            padding: 12px;
+            border-radius: 9px;
+            background: transparent;
+            color: #8f98aa;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
 
-#cadastro {
-    display: none;
-}
-</style>
+        .tab.active {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .form {
+            display: none;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        .form h2 {
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .form-description {
+            color: #8f98aa;
+            font-size: 14px;
+            margin-bottom: 23px;
+        }
+
+        .field {
+            margin-bottom: 17px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d5d9e2;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #293246;
+            border-radius: 11px;
+            outline: none;
+            background: #0a0e17;
+            color: white;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .field input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+        }
+
+        .field input::placeholder {
+            color: #596274;
+        }
+
+        .button {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 5px;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            margin-bottom: 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #86efac;
+        }
+
+        .footer {
+            text-align: center;
+            color: #626b7c;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 23px;
+            }
+
+            .logo h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="box">
+    <main class="container">
 
-    <div class="logo">HBO FLIX</div>
+        <div class="logo">
+            <div class="logo-icon">E</div>
 
-    <!-- LOGIN -->
-    <div id="login">
+            <h1>Estoque<span>PRO</span></h1>
 
-        <h1>Entrar</h1>
-
-        <div id="loginError" class="error"></div>
-
-        <input
-            id="loginEmail"
-            type="email"
-            placeholder="E-mail"
-        >
-
-        <input
-            id="loginSenha"
-            type="password"
-            placeholder="Senha"
-        >
-
-        <button onclick="entrar()">
-            Entrar
-        </button>
-
-        <div class="switch">
-            Não possui conta?
-            <span onclick="mostrarCadastro()">
-                Criar conta
-            </span>
+            <p>Controle seu estoque de forma simples.</p>
         </div>
 
-    </div>
+        <section class="card">
 
+            <div class="tabs">
+                <button
+                    class="tab active"
+                    id="loginTab"
+                    onclick="mostrarFormulario('login')"
+                >
+                    Entrar
+                </button>
 
-    <!-- CADASTRO -->
-    <div id="cadastro">
+                <button
+                    class="tab"
+                    id="cadastroTab"
+                    onclick="mostrarFormulario('cadastro')"
+                >
+                    Criar conta
+                </button>
+            </div>
 
-        <h1>Criar conta</h1>
+            <div
+                id="message"
+                class="message"
+            ></div>
 
-        <div id="cadastroError" class="error"></div>
-        <div id="cadastroSuccess" class="success"></div>
+            <!-- LOGIN -->
 
-        <input
-            id="nome"
-            type="text"
-            placeholder="Seu nome"
-        >
+            <form
+                id="loginForm"
+                class="form active"
+                onsubmit="fazerLogin(event)"
+            >
 
-        <input
-            id="cadastroEmail"
-            type="email"
-            placeholder="E-mail"
-        >
+                <h2>Bem-vindo de volta</h2>
 
-        <input
-            id="cadastroSenha"
-            type="password"
-            placeholder="Senha"
-        >
+                <p class="form-description">
+                    Entre na sua conta do EstoquePRO.
+                </p>
 
-        <button onclick="cadastrar()">
-            Criar conta
-        </button>
+                <div class="field">
+                    <label for="loginEmail">
+                        E-mail
+                    </label>
 
-        <div class="switch">
-            Já possui conta?
-            <span onclick="mostrarLogin()">
-                Entrar
-            </span>
+                    <input
+                        id="loginEmail"
+                        type="email"
+                        placeholder="voce@email.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="loginSenha">
+                        Senha
+                    </label>
+
+                    <input
+                        id="loginSenha"
+                        type="password"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button
+                    class="button"
+                    type="submit"
+                >
+                    Entrar no EstoquePRO
+                </button>
+
+            </form>
+
+            <!-- CADASTRO -->
+
+            <form
+                id="cadastroForm"
+                class="form"
+                onsubmit="criarConta(event)"
+            >
+
+                <h2>Crie sua conta</h2>
+
+                <p class="form-description">
+                    Comece a organizar seu estoque gratuitamente.
+                </p>
+
+                <div class="field">
+                    <label for="cadastroNome">
+                        Seu nome
+                    </label>
+
+                    <input
+                        id="cadastroNome"
+                        type="text"
+                        placeholder="Ex.: João Silva"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="cadastroEmail">
+                        E-mail
+                    </label>
+
+                    <input
+                        id="cadastroEmail"
+                        type="email"
+                        placeholder="voce@email.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="cadastroSenha">
+                        Senha
+                    </label>
+
+                    <input
+                        id="cadastroSenha"
+                        type="password"
+                        placeholder="Mínimo de 6 caracteres"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="cadastroSenhaConfirmacao">
+                        Confirmar senha
+                    </label>
+
+                    <input
+                        id="cadastroSenhaConfirmacao"
+                        type="password"
+                        placeholder="Digite a senha novamente"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <button
+                    class="button"
+                    type="submit"
+                >
+                    Criar minha conta
+                </button>
+
+            </form>
+
+        </section>
+
+        <div class="footer">
+            EstoquePRO © 2026 — Controle de estoque simplificado
         </div>
 
-    </div>
+    </main>
 
-</div>
+    <script>
 
+        const CHAVE_CONTA = "estoqueProConta";
+        const CHAVE_LOGIN = "estoqueProLogado";
 
-<script>
+        function mostrarFormulario(tipo) {
 
-function mostrarCadastro() {
+            const loginForm =
+                document.getElementById("loginForm");
 
-    document.getElementById("login").style.display = "none";
+            const cadastroForm =
+                document.getElementById("cadastroForm");
 
-    document.getElementById("cadastro").style.display = "block";
+            const loginTab =
+                document.getElementById("loginTab");
 
-}
+            const cadastroTab =
+                document.getElementById("cadastroTab");
 
+            esconderMensagem();
 
-function mostrarLogin() {
+            if (tipo === "login") {
 
-    document.getElementById("cadastro").style.display = "none";
+                loginForm.classList.add("active");
+                cadastroForm.classList.remove("active");
 
-    document.getElementById("login").style.display = "block";
+                loginTab.classList.add("active");
+                cadastroTab.classList.remove("active");
 
-}
+            } else {
 
+                loginForm.classList.remove("active");
+                cadastroForm.classList.add("active");
 
-function cadastrar() {
+                loginTab.classList.remove("active");
+                cadastroTab.classList.add("active");
+            }
+        }
 
-    const nome =
-        document.getElementById("nome").value.trim();
+        function mostrarMensagem(texto, tipo) {
 
-    const email =
-        document.getElementById("cadastroEmail").value.trim();
+            const message =
+                document.getElementById("message");
 
-    const senha =
-        document.getElementById("cadastroSenha").value;
+            message.textContent = texto;
 
+            message.className =
+                "message " + tipo;
+        }
 
-    const error =
-        document.getElementById("cadastroError");
+        function esconderMensagem() {
 
-    const success =
-        document.getElementById("cadastroSuccess");
+            const message =
+                document.getElementById("message");
 
+            message.textContent = "";
 
-    error.style.display = "none";
-    success.style.display = "none";
+            message.className = "message";
+        }
 
+        function criarConta(event) {
 
-    if (!nome || !email || !senha) {
+            event.preventDefault();
 
-        error.textContent =
-            "Preencha todos os campos.";
+            const nome =
+                document.getElementById("cadastroNome")
+                .value
+                .trim();
 
-        error.style.display = "block";
+            const email =
+                document.getElementById("cadastroEmail")
+                .value
+                .trim()
+                .toLowerCase();
 
-        return;
-    }
+            const senha =
+                document.getElementById("cadastroSenha")
+                .value;
 
+            const confirmacao =
+                document.getElementById(
+                    "cadastroSenhaConfirmacao"
+                ).value;
 
-    if (senha.length < 4) {
+            if (senha.length < 6) {
 
-        error.textContent =
-            "A senha precisa ter pelo menos 4 caracteres.";
+                mostrarMensagem(
+                    "A senha precisa ter pelo menos 6 caracteres.",
+                    "error"
+                );
 
-        error.style.display = "block";
+                return;
+            }
 
-        return;
-    }
+            if (senha !== confirmacao) {
 
+                mostrarMensagem(
+                    "As senhas não são iguais.",
+                    "error"
+                );
 
-    const conta = {
-        nome: nome,
-        email: email,
-        senha: senha
-    };
+                return;
+            }
 
+            const contaExistente =
+                localStorage.getItem(CHAVE_CONTA);
 
-    localStorage.setItem(
-        "hboFlixConta",
-        JSON.stringify(conta)
-    );
+            if (contaExistente) {
 
+                const conta =
+                    JSON.parse(contaExistente);
 
-    localStorage.setItem(
-        "hboFlixLogado",
-        "true"
-    );
+                if (conta.email === email) {
 
+                    mostrarMensagem(
+                        "Já existe uma conta com esse e-mail.",
+                        "error"
+                    );
 
-    success.textContent =
-        "Conta criada! Entrando...";
+                    return;
+                }
+            }
 
-    success.style.display = "block";
+            const conta = {
+                nome: nome,
+                email: email,
+                senha: senha
+            };
 
+            localStorage.setItem(
+                CHAVE_CONTA,
+                JSON.stringify(conta)
+            );
 
-    setTimeout(function() {
+            localStorage.setItem(
+                CHAVE_LOGIN,
+                "true"
+            );
 
-        window.location.href = "home.html";
+            mostrarMensagem(
+                "Conta criada! Entrando...",
+                "success"
+            );
 
-    }, 700);
+            setTimeout(() => {
 
-}
+                window.location.href = "dashboard.html";
 
+            }, 700);
+        }
 
-function entrar() {
+        function fazerLogin(event) {
 
-    const email =
-        document.getElementById("loginEmail").value.trim();
+            event.preventDefault();
 
-    const senha =
-        document.getElementById("loginSenha").value;
+            const email =
+                document.getElementById("loginEmail")
+                .value
+                .trim()
+                .toLowerCase();
 
+            const senha =
+                document.getElementById("loginSenha")
+                .value;
 
-    const error =
-        document.getElementById("loginError");
+            const contaSalva =
+                localStorage.getItem(CHAVE_CONTA);
 
+            if (!contaSalva) {
 
-    error.style.display = "none";
+                mostrarMensagem(
+                    "Nenhuma conta encontrada. Crie uma conta primeiro.",
+                    "error"
+                );
 
+                return;
+            }
 
-    const contaSalva =
-        localStorage.getItem("hboFlixConta");
+            const conta =
+                JSON.parse(contaSalva);
 
+            if (
+                conta.email !== email ||
+                conta.senha !== senha
+            ) {
 
-    if (!contaSalva) {
+                mostrarMensagem(
+                    "E-mail ou senha incorretos.",
+                    "error"
+                );
 
-        error.textContent =
-            "Nenhuma conta foi criada neste navegador.";
+                return;
+            }
 
-        error.style.display = "block";
+            localStorage.setItem(
+                CHAVE_LOGIN,
+                "true"
+            );
 
-        return;
-    }
+            mostrarMensagem(
+                "Login realizado! Entrando...",
+                "success"
+            );
 
+            setTimeout(() => {
 
-    const conta =
-        JSON.parse(contaSalva);
+                window.location.href = "dashboard.html";
 
+            }, 700);
+        }
 
-    if (
-        email === conta.email &&
-        senha === conta.senha
-    ) {
+        // Se já estiver logado,
+        // vai direto para o painel.
 
-        localStorage.setItem(
-            "hboFlixLogado",
-            "true"
-        );
+        if (
+            localStorage.getItem(CHAVE_LOGIN) === "true"
+        ) {
 
-        window.location.href = "home.html";
+            window.location.href = "dashboard.html";
+        }
 
-    } else {
-
-        error.textContent =
-            "E-mail ou senha incorretos.";
-
-        error.style.display = "block";
-
-    }
-
-}
-
-</script>
+    </script>
 
 </body>
 </html>
