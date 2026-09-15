@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<title>Loja — EstoquePRO</title>
 
-<title>Minha Loja</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 
 <style>
 
@@ -17,36 +16,36 @@ content="width=device-width, initial-scale=1.0">
 box-sizing:border-box;
 margin:0;
 padding:0;
-font-family:Arial,Helvetica,sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
 background:#07111f;
-color:#fff;
+color:white;
 min-height:100vh;
 }
 
 .header{
-padding:35px 20px;
+padding:40px 20px;
 background:#0ea5e9;
 }
 
-.header-content{
+.headerInner{
 max-width:1100px;
 margin:auto;
 }
 
 .logo{
-width:80px;
-height:80px;
+width:85px;
+height:85px;
 object-fit:cover;
 border-radius:15px;
-background:#17263a;
 margin-bottom:15px;
+background:#17263a;
 }
 
 .header h1{
-font-size:32px;
+font-size:34px;
 margin-bottom:8px;
 }
 
@@ -57,19 +56,15 @@ color:#e0f2fe;
 .container{
 max-width:1100px;
 margin:auto;
-padding:30px 20px;
-}
-
-.title{
-margin-bottom:25px;
+padding:35px 20px;
 }
 
 .products{
 display:grid;
 grid-template-columns:
 repeat(auto-fill,minmax(220px,1fr));
-
 gap:20px;
+margin-top:25px;
 }
 
 .product{
@@ -79,33 +74,32 @@ border-radius:15px;
 padding:20px;
 }
 
-.product h3{
+.category{
+font-size:13px;
+color:#38bdf8;
 margin-bottom:10px;
 }
 
-.category{
-color:#38bdf8;
-font-size:13px;
+.product h3{
 margin-bottom:12px;
 }
 
 .price{
-font-size:22px;
+font-size:23px;
 font-weight:bold;
 margin-bottom:10px;
 }
 
 .stock{
 color:#94a3b8;
-font-size:14px;
 }
 
 .empty{
-text-align:center;
 padding:50px 20px;
+text-align:center;
 background:#0d1b2d;
-border-radius:15px;
 border:1px solid #1d2b40;
+border-radius:15px;
 color:#94a3b8;
 }
 
@@ -119,32 +113,24 @@ color:#64748b;
 
 </head>
 
-
 <body>
 
+<header class="header" id="header">
 
-<header
-class="header"
-id="header">
-
-<div class="header-content">
-
+<div class="headerInner">
 
 <img
 id="logo"
 class="logo"
 style="display:none;">
 
-
-<h1 id="nomeLoja">
-Minha Loja
+<h1 id="nome">
+Carregando...
 </h1>
 
-
 <p id="descricao">
-Bem-vindo à nossa loja.
+Carregando loja...
 </p>
-
 
 </div>
 
@@ -153,22 +139,9 @@ Bem-vindo à nossa loja.
 
 <main class="container">
 
-
-<div class="title">
-
 <h2>
 📦 Produtos
 </h2>
-
-<p
-style="color:#94a3b8;margin-top:7px;">
-
-Confira os produtos disponíveis.
-
-</p>
-
-</div>
-
 
 <div
 id="produtos"
@@ -176,141 +149,83 @@ class="products">
 
 </div>
 
-
 </main>
 
 
 <footer class="footer">
 
-Powered by EstoquePRO
+EstoquePRO
 
 </footer>
 
 
 <script>
 
+async function carregar(){
 
-const params =
+const params=
 new URLSearchParams(
-window.location.search
+location.search
 );
 
+const slug=params.get("loja");
 
-const slug =
-params.get("loja");
+if(!slug){
 
-
-const loja =
-JSON.parse(
-localStorage.getItem(
-"estoqueProLoja"
-)
-);
-
-
-const produtos =
-JSON.parse(
-localStorage.getItem(
-"estoqueProProdutos"
-)
-) || [];
-
-
-if(
-!loja ||
-!slug ||
-loja.slug !== slug
-){
-
-document.getElementById(
-"nomeLoja"
-).textContent =
-"Loja não encontrada";
-
-document.getElementById(
-"descricao"
-).textContent =
-"Esta loja ainda não foi configurada.";
-
-document.getElementById(
-"produtos"
-).innerHTML = `
-
-<div class="empty">
-
-<h2>
-😕 Loja não encontrada
-</h2>
-
-<p style="margin-top:10px;">
-
-Verifique o endereço da loja.
-
-</p>
-
-</div>
-
-`;
-
-}else{
-
-
-document.title =
-loja.nome;
-
-
-document.getElementById(
-"nomeLoja"
-).textContent =
-loja.nome;
-
-
-document.getElementById(
-"descricao"
-).textContent =
-loja.descricao ||
-"Bem-vindo à nossa loja.";
-
-
-document.getElementById(
-"header"
-).style.background =
-loja.cor ||
-"#0ea5e9";
-
-
-if(loja.logo){
-
-const logo =
-document.getElementById(
-"logo"
-);
-
-logo.src =
-loja.logo;
-
-logo.style.display =
-"block";
+mostrarErro("Loja não encontrada.");
+return;
 
 }
 
+const {data:loja,error}=await supabaseClient
+.from("lojas")
+.select("*")
+.eq("slug",slug)
+.single();
 
-const container =
-document.getElementById(
-"produtos"
-);
+if(error || !loja){
 
+mostrarErro("Essa loja não existe.");
+return;
 
-const disponiveis =
-produtos.filter(
-produto =>
-Number(produto.quantidade) > 0
-);
+}
 
+document.title=loja.nome+" — EstoquePRO";
 
-if(disponiveis.length === 0){
+document.getElementById("nome").textContent=
+loja.nome;
 
-container.innerHTML = `
+document.getElementById("descricao").textContent=
+loja.descricao||
+"Bem-vindo à nossa loja.";
+
+document.getElementById("header").style.background=
+loja.cor||
+"#0ea5e9";
+
+if(loja.logo){
+
+const logo=document.getElementById("logo");
+
+logo.src=loja.logo;
+
+logo.style.display="block";
+
+}
+
+const {data:produtos}=await supabaseClient
+.from("produtos")
+.select("*")
+.eq("usuario_id",loja.usuario_id)
+.gt("quantidade",0)
+.order("criado_em",{ascending:false});
+
+const container=
+document.getElementById("produtos");
+
+if(!produtos || produtos.length===0){
+
+container.innerHTML=`
 
 <div class="empty">
 
@@ -319,74 +234,88 @@ container.innerHTML = `
 </h2>
 
 <p style="margin-top:10px;">
-
-Os produtos aparecerão aqui quando forem cadastrados.
-
+Esta loja ainda não possui produtos.
 </p>
 
 </div>
 
 `;
 
-}else{
+return;
 
+}
 
-disponiveis.forEach(
-produto => {
+produtos.forEach(produto=>{
 
-const div =
-document.createElement(
-"div"
-);
+const card=document.createElement("div");
 
-div.className =
-"product";
+card.className="product";
 
-
-div.innerHTML = `
+card.innerHTML=`
 
 <div class="category">
-
-${produto.categoria || "Produto"}
-
+${escapeHTML(produto.categoria||"Produto")}
 </div>
 
 <h3>
-
-${produto.nome || "Produto"}
-
+${escapeHTML(produto.nome)}
 </h3>
 
 <div class="price">
-
-R$ ${Number(
-produto.preco || 0
-).toFixed(2).replace(".",",")}
-
+R$ ${Number(produto.preco||0)
+.toFixed(2)
+.replace(".",",")}
 </div>
 
 <div class="stock">
-
-Em estoque:
-${produto.quantidade}
-
+Em estoque: ${produto.quantidade}
 </div>
 
 `;
 
-
-container.appendChild(
-div
-);
+container.appendChild(card);
 
 });
 
 }
 
+function mostrarErro(texto){
+
+document.getElementById("nome").textContent=
+"Loja não encontrada";
+
+document.getElementById("descricao").textContent=
+texto;
+
+document.getElementById("produtos").innerHTML=`
+
+<div class="empty">
+
+<h2>😕 Ops!</h2>
+
+<p style="margin-top:10px;">
+${texto}
+</p>
+
+</div>
+
+`;
+
 }
+
+function escapeHTML(text){
+
+const div=document.createElement("div");
+
+div.textContent=text;
+
+return div.innerHTML;
+
+}
+
+carregar();
 
 </script>
 
 </body>
-
 </html>
