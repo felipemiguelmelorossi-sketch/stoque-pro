@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Minha Loja — EstoquePRO</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#07111f;
+color:#fff;
+min-height:100vh;
+padding:30px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.top h1{
+font-size:30px;
+}
+
+.back{
+border:0;
+background:#17263a;
+color:#fff;
+padding:12px 18px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.panel{
+background:#0d1b2d;
+border:1px solid #1d2b40;
+border-radius:16px;
+padding:25px;
+}
+
+.panel h2{
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin-bottom:7px;
+color:#cbd5e1;
+font-size:14px;
+}
+
+input,
+textarea{
+width:100%;
+padding:13px;
+border:1px solid #26384f;
+border-radius:10px;
+background:#081525;
+color:#fff;
+outline:none;
+margin-bottom:18px;
+}
+
+textarea{
+min-height:110px;
+resize:vertical;
+}
+
+input:focus,
+textarea:focus{
+border-color:#38bdf8;
+}
+
+.btn{
+width:100%;
+padding:14px;
+border:0;
+border-radius:10px;
+background:#0ea5e9;
+color:#fff;
+font-weight:bold;
+cursor:pointer;
+margin-top:5px;
+}
+
+.btn:hover{
+background:#0284c7;
+}
+
+.btn2{
+width:100%;
+padding:14px;
+border:0;
+border-radius:10px;
+background:#17263a;
+color:#fff;
+cursor:pointer;
+margin-top:10px;
+}
+
+.preview{
+border-radius:14px;
+overflow:hidden;
+background:#081525;
+border:1px solid #1d2b40;
+}
+
+.preview-header{
+padding:25px;
+background:#0ea5e9;
+}
+
+.preview-header h2{
+font-size:25px;
+}
+
+.preview-body{
+padding:25px;
+}
+
+.logo-preview{
+width:90px;
+height:90px;
+border-radius:15px;
+object-fit:cover;
+background:#17263a;
+display:block;
+margin-bottom:15px;
+}
+
+.url{
+margin-top:15px;
+padding:15px;
+background:#081525;
+border:1px solid #26384f;
+border-radius:10px;
+color:#38bdf8;
+word-break:break-all;
+}
+
+@media(max-width:750px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+body{
+padding:15px;
+}
+
+.top{
+align-items:flex-start;
+gap:15px;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<div class="top">
+
+<div>
+
+<h1>🛍️ Minha Loja</h1>
+
+<p style="color:#94a3b8;margin-top:6px;">
+Crie e personalize sua loja.
+</p>
+
+</div>
+
+<button
+class="back"
+onclick="window.location.href='dashboard.html'">
+
+← Dashboard
+
+</button>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="panel">
+
+<h2>Personalizar loja</h2>
+
+
+<label>
+Nome da loja
+</label>
+
+<input
+id="nome"
+placeholder="Ex: Loja do João">
+
+
+<label>
+Nome do endereço
+</label>
+
+<input
+id="slug"
+placeholder="Ex: lojadojoao">
+
+
+<label>
+Descrição
+</label>
+
+<textarea
+id="descricao"
+placeholder="Ex: Produtos de qualidade e ótimos preços."></textarea>
+
+
+<label>
+Cor principal
+</label>
+
+<input
+id="cor"
+type="color"
+value="#0ea5e9">
+
+
+<label>
+URL da logo
+</label>
+
+<input
+id="logo"
+placeholder="https://...">
+
+
+<button
+class="btn"
+onclick="salvarLoja()">
+
+💾 Salvar loja
+
+</button>
+
+
+<button
+class="btn2"
+onclick="visitarLoja()">
+
+🌐 Visitar minha loja
+
+</button>
+
+
+<div
+class="url"
+id="url">
+
+Seu endereço aparecerá aqui.
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>Pré-visualização</h2>
+
+
+<div class="preview">
+
+<div
+class="preview-header"
+id="previewHeader">
+
+<img
+id="previewLogo"
+class="logo-preview"
+style="display:none;">
+
+<h2 id="previewNome">
+Minha Loja
+</h2>
+
+</div>
+
+
+<div class="preview-body">
+
+<p
+id="previewDescricao"
+style="color:#94a3b8;">
+
+Sua descrição aparecerá aqui.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+let loja =
+JSON.parse(
+localStorage.getItem("estoqueProLoja")
+) || {
+
+nome:"",
+slug:"",
+descricao:"",
+cor:"#0ea5e9",
+logo:""
+
+};
+
+
+document.getElementById("nome").value =
+loja.nome || "";
+
+document.getElementById("slug").value =
+loja.slug || "";
+
+document.getElementById("descricao").value =
+loja.descricao || "";
+
+document.getElementById("cor").value =
+loja.cor || "#0ea5e9";
+
+document.getElementById("logo").value =
+loja.logo || "";
+
+
+function limparSlug(valor){
+
+return valor
+.toLowerCase()
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g,"")
+.replace(/[^a-z0-9-]/g,"-")
+.replace(/-+/g,"-")
+.replace(/^-|-$/g,"");
+
+}
+
+
+function atualizar(){
+
+const nome =
+document.getElementById("nome").value;
+
+const slug =
+limparSlug(
+document.getElementById("slug").value
+);
+
+const descricao =
+document.getElementById("descricao").value;
+
+const cor =
+document.getElementById("cor").value;
+
+const logo =
+document.getElementById("logo").value;
+
+
+document.getElementById("previewNome").textContent =
+nome || "Minha Loja";
+
+document.getElementById("previewDescricao").textContent =
+descricao || "Sua descrição aparecerá aqui.";
+
+document.getElementById("previewHeader").style.background =
+cor;
+
+
+const imagem =
+document.getElementById("previewLogo");
+
+
+if(logo){
+
+imagem.src = logo;
+
+imagem.style.display = "block";
+
+}else{
+
+imagem.style.display = "none";
+
+}
+
+
+if(slug){
+
+document.getElementById("url").textContent =
+window.location.origin +
+window.location.pathname.replace(
+"editar-loja.html",
+""
+) +
+"loja.html?loja=" +
+slug;
+
+}else{
+
+document.getElementById("url").textContent =
+"Seu endereço aparecerá aqui.";
+
+}
+
+}
+
+
+function salvarLoja(){
+
+const nome =
+document.getElementById("nome").value.trim();
+
+let slug =
+document.getElementById("slug").value.trim();
+
+const descricao =
+document.getElementById("descricao").value.trim();
+
+const cor =
+document.getElementById("cor").value;
+
+const logo =
+document.getElementById("logo").value.trim();
+
+
+if(!nome){
+
+alert(
+"Digite o nome da sua loja."
+);
+
+return;
+
+}
+
+
+if(!slug){
+
+alert(
+"Escolha um nome para o endereço da loja."
+);
+
+return;
+
+}
+
+
+slug =
+limparSlug(slug);
+
+
+loja = {
+
+nome:nome,
+
+slug:slug,
+
+descricao:descricao,
+
+cor:cor,
+
+logo:logo
+
+};
+
+
+localStorage.setItem(
+"estoqueProLoja",
+JSON.stringify(loja)
+);
+
+
+document.getElementById("slug").value =
+slug;
+
+
+atualizar();
+
+
+alert(
+"Loja salva com sucesso!"
+);
+
+}
+
+
+function visitarLoja(){
+
+const lojaSalva =
+JSON.parse(
+localStorage.getItem("estoqueProLoja")
+);
+
+
+if(!lojaSalva || !lojaSalva.slug){
+
+alert(
+"Salve sua loja primeiro."
+);
+
+return;
+
+}
+
+
+window.location.href =
+"loja.html?loja=" +
+encodeURIComponent(
+lojaSalva.slug
+);
+
+}
+
+
+document
+.getElementById("nome")
+.addEventListener(
+"input",
+atualizar
+);
+
+document
+.getElementById("slug")
+.addEventListener(
+"input",
+atualizar
+);
+
+document
+.getElementById("descricao")
+.addEventListener(
+"input",
+atualizar
+);
+
+document
+.getElementById("cor")
+.addEventListener(
+"input",
+atualizar
+);
+
+document
+.getElementById("logo")
+.addEventListener(
+"input",
+atualizar
+);
+
+
+atualizar();
+
+</script>
+
+</body>
+
+</html>
