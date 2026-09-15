@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Minha Loja — EstoquePRO</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 
 <style>
 
@@ -17,13 +16,12 @@ content="width=device-width, initial-scale=1.0">
 box-sizing:border-box;
 margin:0;
 padding:0;
-font-family:Arial,Helvetica,sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
 background:#07111f;
-color:#fff;
-min-height:100vh;
+color:white;
 padding:30px;
 }
 
@@ -39,16 +37,12 @@ align-items:center;
 margin-bottom:25px;
 }
 
-.top h1{
-font-size:30px;
-}
-
 .back{
-border:0;
-background:#17263a;
-color:#fff;
 padding:12px 18px;
+background:#17263a;
+border:0;
 border-radius:10px;
+color:white;
 cursor:pointer;
 }
 
@@ -65,27 +59,22 @@ border-radius:16px;
 padding:25px;
 }
 
-.panel h2{
-margin-bottom:20px;
-}
-
 label{
 display:block;
-margin-bottom:7px;
 color:#cbd5e1;
-font-size:14px;
+margin-bottom:7px;
 }
 
 input,
 textarea{
 width:100%;
 padding:13px;
+margin-bottom:18px;
+background:#081525;
 border:1px solid #26384f;
 border-radius:10px;
-background:#081525;
-color:#fff;
+color:white;
 outline:none;
-margin-bottom:18px;
 }
 
 textarea{
@@ -93,76 +82,48 @@ min-height:110px;
 resize:vertical;
 }
 
-input:focus,
-textarea:focus{
-border-color:#38bdf8;
-}
-
-.btn{
+button.save,
+button.visit{
 width:100%;
 padding:14px;
 border:0;
 border-radius:10px;
-background:#0ea5e9;
-color:#fff;
+cursor:pointer;
+color:white;
 font-weight:bold;
-cursor:pointer;
-margin-top:5px;
 }
 
-.btn:hover{
-background:#0284c7;
+.save{
+background:#0ea5e9;
 }
 
-.btn2{
-width:100%;
-padding:14px;
-border:0;
-border-radius:10px;
+.visit{
 background:#17263a;
-color:#fff;
-cursor:pointer;
 margin-top:10px;
 }
 
-.preview{
-border-radius:14px;
-overflow:hidden;
+.url{
+margin-top:18px;
+padding:15px;
 background:#081525;
-border:1px solid #1d2b40;
+border-radius:10px;
+color:#38bdf8;
+word-break:break-all;
 }
 
-.preview-header{
+.preview{
+background:#081525;
+border-radius:15px;
+overflow:hidden;
+}
+
+.previewHeader{
 padding:25px;
 background:#0ea5e9;
 }
 
-.preview-header h2{
-font-size:25px;
-}
-
-.preview-body{
+.previewBody{
 padding:25px;
-}
-
-.logo-preview{
-width:90px;
-height:90px;
-border-radius:15px;
-object-fit:cover;
-background:#17263a;
-display:block;
-margin-bottom:15px;
-}
-
-.url{
-margin-top:15px;
-padding:15px;
-background:#081525;
-border:1px solid #26384f;
-border-radius:10px;
-color:#38bdf8;
-word-break:break-all;
 }
 
 @media(max-width:750px){
@@ -175,17 +136,11 @@ body{
 padding:15px;
 }
 
-.top{
-align-items:flex-start;
-gap:15px;
-}
-
 }
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -198,14 +153,13 @@ gap:15px;
 <h1>🛍️ Minha Loja</h1>
 
 <p style="color:#94a3b8;margin-top:6px;">
-Crie e personalize sua loja.
+Personalize sua loja pública.
 </p>
 
 </div>
 
-<button
-class="back"
-onclick="window.location.href='dashboard.html'">
+<button class="back"
+onclick="location.href='dashboard.html'">
 
 ← Dashboard
 
@@ -219,34 +173,32 @@ onclick="window.location.href='dashboard.html'">
 
 <div class="panel">
 
-<h2>Personalizar loja</h2>
-
+<h2 style="margin-bottom:20px;">
+Configuração
+</h2>
 
 <label>
 Nome da loja
 </label>
 
-<input
-id="nome"
-placeholder="Ex: Loja do João">
+<input id="nome"
+placeholder="Minha Loja">
 
 
 <label>
-Nome do endereço
+Endereço da loja
 </label>
 
-<input
-id="slug"
-placeholder="Ex: lojadojoao">
+<input id="slug"
+placeholder="minha-loja">
 
 
 <label>
 Descrição
 </label>
 
-<textarea
-id="descricao"
-placeholder="Ex: Produtos de qualidade e ótimos preços."></textarea>
+<textarea id="descricao"
+placeholder="Descrição da sua loja"></textarea>
 
 
 <label>
@@ -260,7 +212,7 @@ value="#0ea5e9">
 
 
 <label>
-URL da logo
+Logo — URL da imagem
 </label>
 
 <input
@@ -269,29 +221,25 @@ placeholder="https://...">
 
 
 <button
-class="btn"
-onclick="salvarLoja()">
+class="save"
+onclick="salvar()">
 
-💾 Salvar loja
+💾 Publicar loja
 
 </button>
 
 
 <button
-class="btn2"
-onclick="visitarLoja()">
+class="visit"
+onclick="visitar()">
 
-🌐 Visitar minha loja
+🌐 Abrir minha loja
 
 </button>
 
 
-<div
-class="url"
-id="url">
-
-Seu endereço aparecerá aqui.
-
+<div class="url" id="url">
+Ainda não publicada.
 </div>
 
 </div>
@@ -299,19 +247,15 @@ Seu endereço aparecerá aqui.
 
 <div class="panel">
 
-<h2>Pré-visualização</h2>
-
+<h2 style="margin-bottom:20px;">
+Pré-visualização
+</h2>
 
 <div class="preview">
 
 <div
-class="preview-header"
+class="previewHeader"
 id="previewHeader">
-
-<img
-id="previewLogo"
-class="logo-preview"
-style="display:none;">
 
 <h2 id="previewNome">
 Minha Loja
@@ -319,14 +263,12 @@ Minha Loja
 
 </div>
 
+<div class="previewBody">
 
-<div class="preview-body">
-
-<p
-id="previewDescricao"
+<p id="previewDescricao"
 style="color:#94a3b8;">
 
-Sua descrição aparecerá aqui.
+Descrição da loja
 
 </p>
 
@@ -344,35 +286,46 @@ Sua descrição aparecerá aqui.
 
 <script>
 
-let loja =
-JSON.parse(
-localStorage.getItem("estoqueProLoja")
-) || {
+let usuario;
 
-nome:"",
-slug:"",
-descricao:"",
-cor:"#0ea5e9",
-logo:""
+async function iniciar(){
 
-};
+const {data}=await supabaseClient.auth.getUser();
 
+if(!data.user){
 
-document.getElementById("nome").value =
-loja.nome || "";
+location.href="index.html";
+return;
 
-document.getElementById("slug").value =
-loja.slug || "";
+}
 
-document.getElementById("descricao").value =
-loja.descricao || "";
+usuario=data.user;
 
-document.getElementById("cor").value =
-loja.cor || "#0ea5e9";
+carregarLoja();
 
-document.getElementById("logo").value =
-loja.logo || "";
+}
 
+async function carregarLoja(){
+
+const {data}=await supabaseClient
+.from("lojas")
+.select("*")
+.eq("usuario_id",usuario.id)
+.maybeSingle();
+
+if(!data) return;
+
+document.getElementById("nome").value=data.nome||"";
+document.getElementById("slug").value=data.slug||"";
+document.getElementById("descricao").value=data.descricao||"";
+document.getElementById("cor").value=data.cor||"#0ea5e9";
+document.getElementById("logo").value=data.logo||"";
+
+atualizarPreview(data);
+
+mostrarURL(data.slug);
+
+}
 
 function limparSlug(valor){
 
@@ -386,222 +339,148 @@ return valor
 
 }
 
-
-function atualizar(){
-
-const nome =
-document.getElementById("nome").value;
-
-const slug =
-limparSlug(
-document.getElementById("slug").value
-);
-
-const descricao =
-document.getElementById("descricao").value;
-
-const cor =
-document.getElementById("cor").value;
-
-const logo =
-document.getElementById("logo").value;
-
-
-document.getElementById("previewNome").textContent =
-nome || "Minha Loja";
-
-document.getElementById("previewDescricao").textContent =
-descricao || "Sua descrição aparecerá aqui.";
-
-document.getElementById("previewHeader").style.background =
-cor;
-
-
-const imagem =
-document.getElementById("previewLogo");
-
-
-if(logo){
-
-imagem.src = logo;
-
-imagem.style.display = "block";
-
-}else{
-
-imagem.style.display = "none";
-
-}
-
-
-if(slug){
-
-document.getElementById("url").textContent =
-window.location.origin +
-window.location.pathname.replace(
-"editar-loja.html",
-""
-) +
-"loja.html?loja=" +
-slug;
-
-}else{
-
-document.getElementById("url").textContent =
-"Seu endereço aparecerá aqui.";
-
-}
-
-}
-
-
-function salvarLoja(){
-
-const nome =
-document.getElementById("nome").value.trim();
-
-let slug =
-document.getElementById("slug").value.trim();
-
-const descricao =
-document.getElementById("descricao").value.trim();
-
-const cor =
-document.getElementById("cor").value;
-
-const logo =
-document.getElementById("logo").value.trim();
-
-
-if(!nome){
-
-alert(
-"Digite o nome da sua loja."
-);
-
-return;
-
-}
-
+function mostrarURL(slug){
 
 if(!slug){
 
-alert(
-"Escolha um nome para o endereço da loja."
-);
+document.getElementById("url").textContent=
+"Ainda não publicada.";
 
 return;
 
 }
 
+document.getElementById("url").textContent=
+location.origin+
+location.pathname.replace(
+"editar-loja.html",
+""
+)+
+"loja.html?loja="+
+encodeURIComponent(slug);
 
-slug =
-limparSlug(slug);
+}
 
+function atualizarPreview(loja){
 
-loja = {
+document.getElementById("previewNome").textContent=
+loja.nome||"Minha Loja";
 
+document.getElementById("previewDescricao").textContent=
+loja.descricao||"Descrição da loja";
+
+document.getElementById("previewHeader").style.background=
+loja.cor||"#0ea5e9";
+
+}
+
+async function salvar(){
+
+let nome=
+document.getElementById("nome").value.trim();
+
+let slug=
+limparSlug(
+document.getElementById("slug").value.trim()
+);
+
+let descricao=
+document.getElementById("descricao").value.trim();
+
+let cor=
+document.getElementById("cor").value;
+
+let logo=
+document.getElementById("logo").value.trim();
+
+if(!nome){
+
+alert("Digite o nome da loja.");
+return;
+
+}
+
+if(!slug){
+
+alert("Digite o endereço da loja.");
+return;
+
+}
+
+const {data:existente}=await supabaseClient
+.from("lojas")
+.select("id")
+.eq("slug",slug)
+.neq("usuario_id",usuario.id)
+.maybeSingle();
+
+if(existente){
+
+alert("Esse endereço já está sendo usado.");
+return;
+
+}
+
+const {error}=await supabaseClient
+.from("lojas")
+.upsert({
+
+usuario_id:usuario.id,
 nome:nome,
-
 slug:slug,
-
 descricao:descricao,
-
 cor:cor,
-
 logo:logo
 
-};
+},{
+onConflict:"usuario_id"
+});
 
+if(error){
 
-localStorage.setItem(
-"estoqueProLoja",
-JSON.stringify(loja)
-);
-
-
-document.getElementById("slug").value =
-slug;
-
-
-atualizar();
-
-
-alert(
-"Loja salva com sucesso!"
-);
-
-}
-
-
-function visitarLoja(){
-
-const lojaSalva =
-JSON.parse(
-localStorage.getItem("estoqueProLoja")
-);
-
-
-if(!lojaSalva || !lojaSalva.slug){
-
-alert(
-"Salve sua loja primeiro."
-);
-
+alert(error.message);
 return;
 
 }
 
+document.getElementById("slug").value=slug;
 
-window.location.href =
-"loja.html?loja=" +
-encodeURIComponent(
-lojaSalva.slug
-);
+atualizarPreview({
+nome,
+descricao,
+cor
+});
+
+mostrarURL(slug);
+
+alert("Sua loja foi publicada!");
 
 }
 
+async function visitar(){
 
-document
-.getElementById("nome")
-.addEventListener(
-"input",
-atualizar
-);
+const {data}=await supabaseClient
+.from("lojas")
+.select("slug")
+.eq("usuario_id",usuario.id)
+.single();
 
-document
-.getElementById("slug")
-.addEventListener(
-"input",
-atualizar
-);
+if(!data){
 
-document
-.getElementById("descricao")
-.addEventListener(
-"input",
-atualizar
-);
+alert("Publique sua loja primeiro.");
+return;
 
-document
-.getElementById("cor")
-.addEventListener(
-"input",
-atualizar
-);
+}
 
-document
-.getElementById("logo")
-.addEventListener(
-"input",
-atualizar
-);
+location.href=
+"loja.html?loja="+
+encodeURIComponent(data.slug);
 
+}
 
-atualizar();
+iniciar();
 
 </script>
 
 </body>
-
 </html>
