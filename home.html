@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HBO Flix - Início</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #080808;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            background: #0b0b0b;
+            border-bottom: 1px solid #202020;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #b88cff;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #userName {
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .logout {
+            border: 0;
+            background: #222;
+            color: white;
+            padding: 9px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .logout:hover {
+            background: #333;
+        }
+
+        .hero {
+            min-height: 430px;
+            padding: 80px 7%;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(90deg, #080808 0%, rgba(8,8,8,.85) 45%, rgba(8,8,8,.15) 100%),
+                linear-gradient(180deg, #171020, #080808);
+        }
+
+        .hero-content {
+            max-width: 560px;
+        }
+
+        .tag {
+            color: #b88cff;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: clamp(40px, 6vw, 70px);
+            line-height: .95;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            color: #bbb;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .watch {
+            background: white;
+            color: black;
+            border: 0;
+            padding: 13px 22px;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .section {
+            padding: 35px 5%;
+        }
+
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            height: 245px;
+            background: #151515;
+            border-radius: 9px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: .2s;
+            border: 1px solid #222;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            border-color: #444;
+        }
+
+        .poster {
+            height: 190px;
+            background: linear-gradient(145deg, #27143d, #111);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .card-title {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                display: none;
+            }
+
+            header {
+                padding: 0 20px;
+            }
+
+            .hero {
+                padding: 60px 25px;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HBO FLIX</div>
+
+    <nav>
+        <a href="home.html">Início</a>
+        <a href="#">Filmes</a>
+        <a href="#">Séries</a>
+        <a href="#">Minha lista</a>
+    </nav>
+
+    <div class="user">
+        <span id="userName">Usuário</span>
+        <button class="logout" onclick="logout()">Sair</button>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="tag">HBO FLIX</div>
+
+        <h1>Seu entretenimento em um só lugar.</h1>
+
+        <p class="description">
+            Descubra filmes e séries e continue assistindo de onde parou.
+        </p>
+
+        <button class="watch" onclick="alert('Player será conectado na próxima etapa.')">
+            ▶ Assistir agora
+        </button>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Em destaque</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="poster">CAPA</div>
+            <div class="card-title">Filme em destaque</div>
+        </div>
+
+        <div class="card">
+            <div class="poster">CAPA</div>
+            <div class="card-title">Novo lançamento</div>
+        </div>
+
+        <div class="card">
+            <div class="poster">CAPA</div>
+            <div class="card-title">Série popular</div>
+        </div>
+
+        <div class="card">
+            <div class="poster">CAPA</div>
+            <div class="card-title">Recomendado</div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    const conta = localStorage.getItem("hboFlixConta");
+
+    // Se não existir conta, volta para o cadastro/login
+    if (!conta) {
+        window.location.href = "index.html";
+    } else {
+        const usuario = JSON.parse(conta);
+
+        document.getElementById("userName").textContent =
+            usuario.nome || usuario.email;
+    }
+
+    function logout() {
+        localStorage.removeItem("hboFlixLogado");
+        window.location.href = "index.html";
+    }
+</script>
+
+</body>
+</html>
