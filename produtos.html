@@ -122,8 +122,16 @@ body{
     font-weight:bold;
 }
 
+.btn:hover{
+    background:#1d4ed8;
+}
+
 .btn.secondary{
     background:#162b43;
+}
+
+.btn.secondary:hover{
+    background:#1d3856;
 }
 
 .btn.danger{
@@ -160,6 +168,13 @@ body{
     background:#081522;
     color:white;
     outline:none;
+}
+
+.field input:focus,
+.field select:focus,
+.search:focus,
+textarea:focus{
+    border-color:#3b82f6;
 }
 
 .form-actions{
@@ -222,8 +237,16 @@ th{
     color:white;
 }
 
+.actions button:hover{
+    background:#2563eb;
+}
+
 .actions .delete{
     background:#7f1d1d;
+}
+
+.actions .delete:hover{
+    background:#991b1b;
 }
 
 .empty{
@@ -267,6 +290,28 @@ textarea{
     line-height:1.5;
 }
 
+.limit-box{
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    background:#081522;
+    border:1px solid #1c3148;
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.limit-box strong{
+    color:white;
+}
+
+.pro-limit{
+    color:#4ade80;
+}
+
+.free-limit{
+    color:#facc15;
+}
+
 @media(max-width:900px){
 
     .sidebar{
@@ -304,6 +349,7 @@ textarea{
         flex-direction:column;
         align-items:flex-start;
     }
+
 }
 
 </style>
@@ -313,6 +359,8 @@ textarea{
 <body>
 
 <div class="layout">
+
+<!-- SIDEBAR -->
 
 <aside class="sidebar">
 
@@ -334,7 +382,7 @@ textarea{
             🔄 Movimentações
         </button>
 
-        <button onclick="alert('Relatórios avançados estarão disponíveis no PRO.')">
+        <button onclick="mostrarRelatorios()">
             📈 Relatórios
         </button>
 
@@ -350,23 +398,32 @@ textarea{
 
 </aside>
 
+
+<!-- CONTEÚDO -->
+
 <main class="main">
 
     <div class="top">
 
         <div>
+
             <h1>Produtos</h1>
 
             <p style="color:#94a3b8;margin-top:5px;">
-                Controle seu estoque.
+                Controle seu estoque de forma profissional.
             </p>
+
         </div>
 
-        <div class="plan" id="planDisplay">
+        <div
+            class="plan"
+            id="planDisplay"
+        >
             🆓 Gratuito
         </div>
 
     </div>
+
 
     <!-- FORMULÁRIO -->
 
@@ -380,7 +437,9 @@ textarea{
 
             <div class="field">
 
-                <label>Nome do produto</label>
+                <label>
+                    Nome do produto
+                </label>
 
                 <input
                     id="nome"
@@ -390,9 +449,12 @@ textarea{
 
             </div>
 
+
             <div class="field">
 
-                <label>Categoria</label>
+                <label>
+                    Categoria
+                </label>
 
                 <input
                     id="categoria"
@@ -402,9 +464,12 @@ textarea{
 
             </div>
 
+
             <div class="field">
 
-                <label>Código</label>
+                <label>
+                    Código
+                </label>
 
                 <input
                     id="codigo"
@@ -414,9 +479,12 @@ textarea{
 
             </div>
 
+
             <div class="field">
 
-                <label>Preço</label>
+                <label>
+                    Preço
+                </label>
 
                 <input
                     id="preco"
@@ -428,9 +496,12 @@ textarea{
 
             </div>
 
+
             <div class="field">
 
-                <label>Quantidade inicial</label>
+                <label>
+                    Quantidade inicial
+                </label>
 
                 <input
                     id="quantidade"
@@ -441,9 +512,12 @@ textarea{
 
             </div>
 
+
             <div class="field">
 
-                <label>Estoque mínimo</label>
+                <label>
+                    Estoque mínimo
+                </label>
 
                 <input
                     id="minimo"
@@ -454,9 +528,12 @@ textarea{
 
             </div>
 
+
             <div class="field">
 
-                <label>Ícone</label>
+                <label>
+                    Ícone
+                </label>
 
                 <input
                     id="icone"
@@ -468,6 +545,7 @@ textarea{
             </div>
 
         </div>
+
 
         <div class="form-actions">
 
@@ -487,18 +565,31 @@ textarea{
 
         </div>
 
+
+        <div
+            class="limit-box"
+            id="limiteInfo"
+        ></div>
+
     </div>
 
-    <!-- IMPORTAÇÃO -->
+
+    <!-- ESTOQUE POR LINHA -->
 
     <div class="panel">
 
-        <h3>📥 Adicionar estoque por linha</h3>
+        <h3>
+            📥 Adicionar estoque por linha
+        </h3>
 
-        <p class="help" style="margin:8px 0 15px;">
+        <p
+            class="help"
+            style="margin:8px 0 15px;"
+        >
             Digite uma linha por produto no formato:
             <strong>Camiseta Preta | 10</strong>
         </p>
+
 
         <div class="import-area">
 
@@ -507,21 +598,25 @@ textarea{
                 placeholder="Camiseta Preta | 10&#10;Calça Jeans | 5&#10;Tênis Branco | 8"
             ></textarea>
 
+
             <div>
 
                 <button
                     class="btn"
                     onclick="adicionarPorLinha()"
                 >
-                    Adicionar estoque
+                    ➕ Adicionar estoque
                 </button>
 
-                <br><br>
+                <br>
+                <br>
+
 
                 <label
                     class="btn secondary"
                     style="display:inline-block;"
                 >
+
                     📄 Importar TXT
 
                     <input
@@ -534,7 +629,9 @@ textarea{
 
                 </label>
 
-                <br><br>
+                <br>
+                <br>
+
 
                 <button
                     class="btn secondary"
@@ -548,6 +645,7 @@ textarea{
         </div>
 
     </div>
+
 
     <!-- PRODUTOS -->
 
@@ -563,7 +661,9 @@ textarea{
             "
         >
 
-            <h3>📦 Lista de produtos</h3>
+            <h3>
+                📦 Lista de produtos
+            </h3>
 
             <span
                 id="contador"
@@ -573,6 +673,7 @@ textarea{
             </span>
 
         </div>
+
 
         <div class="toolbar">
 
@@ -585,6 +686,7 @@ textarea{
 
         </div>
 
+
         <div class="table-wrapper">
 
             <table>
@@ -593,19 +695,41 @@ textarea{
 
                     <tr>
 
-                        <th>Produto</th>
-                        <th>Categoria</th>
-                        <th>Código</th>
-                        <th>Preço</th>
-                        <th>Estoque</th>
-                        <th>Status</th>
-                        <th>Ações</th>
+                        <th>
+                            Produto
+                        </th>
+
+                        <th>
+                            Categoria
+                        </th>
+
+                        <th>
+                            Código
+                        </th>
+
+                        <th>
+                            Preço
+                        </th>
+
+                        <th>
+                            Estoque
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Ações
+                        </th>
 
                     </tr>
 
                 </thead>
 
-                <tbody id="listaProdutos"></tbody>
+                <tbody
+                    id="listaProdutos"
+                ></tbody>
 
             </table>
 
@@ -613,11 +737,14 @@ textarea{
 
     </div>
 
+
     <!-- HISTÓRICO -->
 
     <div class="panel">
 
-        <h3>🔄 Histórico de movimentações</h3>
+        <h3>
+            🔄 Histórico de movimentações
+        </h3>
 
         <div
             id="historico"
@@ -630,16 +757,28 @@ textarea{
 
 </div>
 
+
 <script>
 
+/* =========================================
+   PROTEÇÃO DE LOGIN
+========================================= */
+
 if(
-    localStorage.getItem("estoqueProLogado")
-    !== "true"
+    localStorage.getItem(
+        "estoqueProLogado"
+    ) !== "true"
 ){
 
-    window.location.href = "index.html";
+    window.location.href =
+        "index.html";
 
 }
+
+
+/* =========================================
+   DADOS
+========================================= */
 
 let produtos =
     JSON.parse(
@@ -648,6 +787,7 @@ let produtos =
         ) || "[]"
     );
 
+
 let movimentacoes =
     JSON.parse(
         localStorage.getItem(
@@ -655,7 +795,9 @@ let movimentacoes =
         ) || "[]"
     );
 
+
 let editandoId = null;
+
 
 const conta =
     JSON.parse(
@@ -664,6 +806,7 @@ const conta =
         ) || "null"
     );
 
+
 if(!conta){
 
     window.location.href =
@@ -671,10 +814,77 @@ if(!conta){
 
 }
 
-document.getElementById("planDisplay").textContent =
-    conta.plano === "pro"
+
+/* =========================================
+   PLANO
+========================================= */
+
+const isPro =
+    conta.plano === "pro";
+
+
+document.getElementById(
+    "planDisplay"
+).textContent =
+
+    isPro
         ? "🚀 PRO"
         : "🆓 Gratuito";
+
+
+function atualizarLimite(){
+
+    const box =
+        document.getElementById(
+            "limiteInfo"
+        );
+
+    if(isPro){
+
+        box.innerHTML =
+            `
+            <span class="pro-limit">
+                🚀 Plano PRO:
+            </span>
+
+            <strong>
+                produtos ilimitados.
+            </strong>
+            `;
+
+    }else{
+
+        const restante =
+            Math.max(
+                0,
+                10 - produtos.length
+            );
+
+        box.innerHTML =
+            `
+            <span class="free-limit">
+                🆓 Plano Gratuito:
+            </span>
+
+            <strong>
+                ${produtos.length}/10 produtos utilizados.
+            </strong>
+
+            ${
+                restante === 0
+                    ? " Faça upgrade para adicionar mais produtos."
+                    : ` Restam ${restante} produto(s).`
+            }
+            `;
+
+    }
+
+}
+
+
+/* =========================================
+   SALVAR DADOS
+========================================= */
 
 function salvarDados(){
 
@@ -690,125 +900,216 @@ function salvarDados(){
 
 }
 
+
+/* =========================================
+   SEGURANÇA HTML
+========================================= */
+
 function escapeHtml(text){
 
     return String(text)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
+
+
+/* =========================================
+   SALVAR PRODUTO
+========================================= */
 
 function salvarProduto(){
 
     const nome =
-        document.getElementById("nome")
-        .value.trim();
+        document.getElementById(
+            "nome"
+        ).value.trim();
+
 
     const categoria =
-        document.getElementById("categoria")
-        .value.trim();
+        document.getElementById(
+            "categoria"
+        ).value.trim();
+
 
     const codigo =
-        document.getElementById("codigo")
-        .value.trim();
+        document.getElementById(
+            "codigo"
+        ).value.trim();
+
 
     const preco =
         Number(
-            document.getElementById("preco")
-            .value
+            document.getElementById(
+                "preco"
+            ).value
         ) || 0;
+
 
     const quantidade =
         Number(
-            document.getElementById("quantidade")
-            .value
+            document.getElementById(
+                "quantidade"
+            ).value
         ) || 0;
+
 
     const minimo =
         Number(
-            document.getElementById("minimo")
-            .value
+            document.getElementById(
+                "minimo"
+            ).value
         ) || 0;
 
+
     const icone =
-        document.getElementById("icone")
-        .value.trim() || "📦";
+        document.getElementById(
+            "icone"
+        ).value.trim() || "📦";
+
 
     if(!nome){
 
-        alert("Digite o nome do produto.");
+        alert(
+            "Digite o nome do produto."
+        );
 
         return;
 
     }
 
+
+    /* =====================================
+       EDITAR
+    ===================================== */
+
     if(editandoId){
 
         const produto =
             produtos.find(
-                p => p.id === editandoId
+                p =>
+                    p.id === editandoId
             );
+
 
         if(produto){
 
-            produto.nome = nome;
-            produto.categoria = categoria;
-            produto.codigo = codigo;
-            produto.preco = preco;
-            produto.quantidade = quantidade;
-            produto.minimo = minimo;
-            produto.icone = icone;
+            produto.nome =
+                nome;
+
+            produto.categoria =
+                categoria;
+
+            produto.codigo =
+                codigo;
+
+            produto.preco =
+                preco;
+
+            produto.quantidade =
+                quantidade;
+
+            produto.minimo =
+                minimo;
+
+            produto.icone =
+                icone;
 
         }
 
+
         editandoId = null;
+
 
         document.getElementById(
             "formTitle"
         ).textContent =
             "➕ Adicionar produto";
 
+
     }else{
 
-        const limiteFree = 50;
+        /* =================================
+           LIMITE FREE = 10 PRODUTOS
+        ================================= */
 
         if(
-            conta.plano !== "pro" &&
-            produtos.length >= limiteFree
+            !isPro &&
+            produtos.length >= 10
         ){
 
             alert(
-                "O plano gratuito permite até 50 produtos. Faça upgrade para o PRO."
+                "Seu plano gratuito atingiu o limite de 10 produtos. Faça upgrade para o EstoquePRO PRO e tenha produtos ilimitados."
             );
 
             return;
 
         }
 
+
         const produto = {
 
             id:
                 Date.now().toString(),
 
-            nome,
-            categoria,
-            codigo,
-            preco,
-            quantidade,
-            minimo,
-            icone,
+            nome:
+                nome,
+
+            categoria:
+                categoria,
+
+            codigo:
+                codigo,
+
+            preco:
+                preco,
+
+            quantidade:
+                quantidade,
+
+            minimo:
+                minimo,
+
+            icone:
+                icone,
 
             criadoEm:
                 new Date().toISOString()
 
         };
 
-        produtos.push(produto);
 
-        if(quantidade > 0){
+        produtos.push(
+            produto
+        );
+
+
+        if(
+            quantidade > 0
+        ){
 
             movimentacoes.push({
 
@@ -821,7 +1122,8 @@ function salvarProduto(){
                 tipo:
                     "entrada",
 
-                quantidade,
+                quantidade:
+                    quantidade,
 
                 data:
                     new Date().toISOString()
@@ -832,6 +1134,7 @@ function salvarProduto(){
 
     }
 
+
     salvarDados();
 
     limparFormulario();
@@ -840,19 +1143,54 @@ function salvarProduto(){
 
     renderizarHistorico();
 
+    atualizarLimite();
+
 }
+
+
+/* =========================================
+   LIMPAR FORMULÁRIO
+========================================= */
 
 function limparFormulario(){
 
-    document.getElementById("nome").value = "";
-    document.getElementById("categoria").value = "";
-    document.getElementById("codigo").value = "";
-    document.getElementById("preco").value = "";
-    document.getElementById("quantidade").value = "0";
-    document.getElementById("minimo").value = "5";
-    document.getElementById("icone").value = "📦";
+    document.getElementById(
+        "nome"
+    ).value = "";
+
+
+    document.getElementById(
+        "categoria"
+    ).value = "";
+
+
+    document.getElementById(
+        "codigo"
+    ).value = "";
+
+
+    document.getElementById(
+        "preco"
+    ).value = "";
+
+
+    document.getElementById(
+        "quantidade"
+    ).value = "0";
+
+
+    document.getElementById(
+        "minimo"
+    ).value = "5";
+
+
+    document.getElementById(
+        "icone"
+    ).value = "📦";
+
 
     editandoId = null;
+
 
     document.getElementById(
         "formTitle"
@@ -860,6 +1198,11 @@ function limparFormulario(){
         "➕ Adicionar produto";
 
 }
+
+
+/* =========================================
+   RENDERIZAR PRODUTOS
+========================================= */
 
 function renderizarProdutos(){
 
@@ -870,174 +1213,271 @@ function renderizarProdutos(){
         .toLowerCase()
         .trim();
 
+
     const lista =
         document.getElementById(
             "listaProdutos"
         );
 
+
     const filtrados =
-        produtos.filter(p =>
+        produtos.filter(
+            p =>
 
-            p.nome
+                p.nome
+                    .toLowerCase()
+                    .includes(busca)
+
+                ||
+
+                String(
+                    p.codigo || ""
+                )
                 .toLowerCase()
                 .includes(busca)
 
-            ||
+                ||
 
-            String(p.codigo || "")
+                String(
+                    p.categoria || ""
+                )
                 .toLowerCase()
                 .includes(busca)
-
-            ||
-
-            String(p.categoria || "")
-                .toLowerCase()
-                .includes(busca)
-
         );
+
 
     document.getElementById(
         "contador"
     ).textContent =
+
         produtos.length +
+
         (
             produtos.length === 1
                 ? " produto"
                 : " produtos"
         );
 
-    if(filtrados.length === 0){
+
+    if(
+        filtrados.length === 0
+    ){
 
         lista.innerHTML = `
+
             <tr>
+
                 <td colspan="7">
+
                     <div class="empty">
+
                         Nenhum produto encontrado.
+
                     </div>
+
                 </td>
+
             </tr>
+
         `;
 
         return;
 
     }
 
+
     lista.innerHTML =
-        filtrados.map(p => {
 
-            const quantidade =
-                Number(p.quantidade || 0);
+        filtrados
+        .map(
+            p => {
 
-            const minimo =
-                Number(p.minimo || 0);
+                const quantidade =
+                    Number(
+                        p.quantidade || 0
+                    );
 
-            let statusClass =
-                "normal";
 
-            let statusText =
-                "Normal";
+                const minimo =
+                    Number(
+                        p.minimo || 0
+                    );
 
-            if(quantidade <= 0){
 
-                statusClass = "out";
-                statusText = "Sem estoque";
+                let statusClass =
+                    "normal";
 
-            }else if(
-                quantidade <= minimo
-            ){
 
-                statusClass = "low";
-                statusText = "Estoque baixo";
+                let statusText =
+                    "Normal";
 
-            }
 
-            return `
+                if(
+                    quantidade <= 0
+                ){
 
-                <tr>
+                    statusClass =
+                        "out";
 
-                    <td>
-                        ${escapeHtml(p.icone || "📦")}
-                        ${escapeHtml(p.nome)}
-                    </td>
+                    statusText =
+                        "Sem estoque";
 
-                    <td>
-                        ${escapeHtml(p.categoria || "-")}
-                    </td>
+                }
 
-                    <td>
-                        ${escapeHtml(p.codigo || "-")}
-                    </td>
+                else if(
+                    quantidade <= minimo
+                ){
 
-                    <td>
-                        ${Number(p.preco || 0)
-                            .toLocaleString(
+                    statusClass =
+                        "low";
+
+                    statusText =
+                        "Estoque baixo";
+
+                }
+
+
+                return `
+
+                    <tr>
+
+                        <td>
+
+                            ${escapeHtml(
+                                p.icone || "📦"
+                            )}
+
+                            ${escapeHtml(
+                                p.nome
+                            )}
+
+                        </td>
+
+
+                        <td>
+
+                            ${escapeHtml(
+                                p.categoria || "-"
+                            )}
+
+                        </td>
+
+
+                        <td>
+
+                            ${escapeHtml(
+                                p.codigo || "-"
+                            )}
+
+                        </td>
+
+
+                        <td>
+
+                            ${Number(
+                                p.preco || 0
+                            ).toLocaleString(
                                 "pt-BR",
                                 {
                                     style:"currency",
                                     currency:"BRL"
                                 }
                             )}
-                    </td>
 
-                    <td>
-                        <strong>${quantidade}</strong>
-                    </td>
+                        </td>
 
-                    <td>
-                        <span class="status ${statusClass}">
-                            ${statusText}
-                        </span>
-                    </td>
 
-                    <td>
+                        <td>
 
-                        <div class="actions">
+                            <strong>
+                                ${quantidade}
+                            </strong>
 
-                            <button
-                                onclick="adicionarEstoque('${p.id}')"
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="status ${statusClass}"
                             >
-                                ➕
-                            </button>
+                                ${statusText}
+                            </span>
 
-                            <button
-                                onclick="retirarEstoque('${p.id}')"
-                            >
-                                ➖
-                            </button>
+                        </td>
 
-                            <button
-                                onclick="editarProduto('${p.id}')"
-                            >
-                                ✏️
-                            </button>
 
-                            <button
-                                class="delete"
-                                onclick="excluirProduto('${p.id}')"
-                            >
-                                🗑️
-                            </button>
+                        <td>
 
-                        </div>
+                            <div class="actions">
 
-                    </td>
+                                <button
+                                    onclick="adicionarEstoque('${p.id}')"
+                                    title="Adicionar estoque"
+                                >
+                                    ➕
+                                </button>
 
-                </tr>
 
-            `;
+                                <button
+                                    onclick="retirarEstoque('${p.id}')"
+                                    title="Retirar estoque"
+                                >
+                                    ➖
+                                </button>
 
-        }).join("");
+
+                                <button
+                                    onclick="editarProduto('${p.id}')"
+                                    title="Editar"
+                                >
+                                    ✏️
+                                </button>
+
+
+                                <button
+                                    class="delete"
+                                    onclick="excluirProduto('${p.id}')"
+                                    title="Excluir"
+                                >
+                                    🗑️
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        )
+        .join("");
 
 }
+
+
+/* =========================================
+   ADICIONAR ESTOQUE
+   DISPONÍVEL FREE + PRO
+========================================= */
 
 function adicionarEstoque(id){
 
     const produto =
         produtos.find(
-            p => p.id === id
+            p =>
+                p.id === id
         );
 
-    if(!produto) return;
+
+    if(!produto){
+
+        return;
+
+    }
+
 
     const quantidade =
         Number(
@@ -1046,8 +1486,11 @@ function adicionarEstoque(id){
             )
         );
 
+
     if(
-        !Number.isFinite(quantidade) ||
+        !Number.isFinite(
+            quantidade
+        ) ||
         quantidade <= 0
     ){
 
@@ -1055,9 +1498,17 @@ function adicionarEstoque(id){
 
     }
 
+
     produto.quantidade =
-        Number(produto.quantidade || 0)
-        + quantidade;
+
+        Number(
+            produto.quantidade || 0
+        )
+
+        +
+
+        quantidade;
+
 
     movimentacoes.push({
 
@@ -1070,12 +1521,14 @@ function adicionarEstoque(id){
         tipo:
             "entrada",
 
-        quantidade,
+        quantidade:
+            quantidade,
 
         data:
             new Date().toISOString()
 
     });
+
 
     salvarDados();
 
@@ -1083,16 +1536,31 @@ function adicionarEstoque(id){
 
     renderizarHistorico();
 
+    atualizarLimite();
+
 }
+
+
+/* =========================================
+   RETIRAR ESTOQUE
+   DISPONÍVEL FREE + PRO
+========================================= */
 
 function retirarEstoque(id){
 
     const produto =
         produtos.find(
-            p => p.id === id
+            p =>
+                p.id === id
         );
 
-    if(!produto) return;
+
+    if(!produto){
+
+        return;
+
+    }
+
 
     const quantidade =
         Number(
@@ -1101,8 +1569,11 @@ function retirarEstoque(id){
             )
         );
 
+
     if(
-        !Number.isFinite(quantidade) ||
+        !Number.isFinite(
+            quantidade
+        ) ||
         quantidade <= 0
     ){
 
@@ -1110,9 +1581,12 @@ function retirarEstoque(id){
 
     }
 
+
     if(
         quantidade >
-        Number(produto.quantidade || 0)
+        Number(
+            produto.quantidade || 0
+        )
     ){
 
         alert(
@@ -1123,7 +1597,10 @@ function retirarEstoque(id){
 
     }
 
-    produto.quantidade -= quantidade;
+
+    produto.quantidade -=
+        quantidade;
+
 
     movimentacoes.push({
 
@@ -1136,12 +1613,14 @@ function retirarEstoque(id){
         tipo:
             "saida",
 
-        quantidade,
+        quantidade:
+            quantidade,
 
         data:
             new Date().toISOString()
 
     });
+
 
     salvarDados();
 
@@ -1151,58 +1630,109 @@ function retirarEstoque(id){
 
 }
 
+
+/* =========================================
+   EDITAR PRODUTO
+========================================= */
+
 function editarProduto(id){
 
     const p =
         produtos.find(
-            p => p.id === id
+            p =>
+                p.id === id
         );
 
-    if(!p) return;
 
-    document.getElementById("nome").value =
+    if(!p){
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "nome"
+    ).value =
         p.nome;
 
-    document.getElementById("categoria").value =
+
+    document.getElementById(
+        "categoria"
+    ).value =
         p.categoria || "";
 
-    document.getElementById("codigo").value =
+
+    document.getElementById(
+        "codigo"
+    ).value =
         p.codigo || "";
 
-    document.getElementById("preco").value =
+
+    document.getElementById(
+        "preco"
+    ).value =
         p.preco || 0;
 
-    document.getElementById("quantidade").value =
+
+    document.getElementById(
+        "quantidade"
+    ).value =
         p.quantidade || 0;
 
-    document.getElementById("minimo").value =
+
+    document.getElementById(
+        "minimo"
+    ).value =
         p.minimo || 0;
 
-    document.getElementById("icone").value =
+
+    document.getElementById(
+        "icone"
+    ).value =
         p.icone || "📦";
 
-    editandoId = id;
+
+    editandoId =
+        id;
+
 
     document.getElementById(
         "formTitle"
     ).textContent =
         "✏️ Editar produto";
 
+
     window.scrollTo({
+
         top:0,
+
         behavior:"smooth"
+
     });
 
 }
+
+
+/* =========================================
+   EXCLUIR PRODUTO
+========================================= */
 
 function excluirProduto(id){
 
     const produto =
         produtos.find(
-            p => p.id === id
+            p =>
+                p.id === id
         );
 
-    if(!produto) return;
+
+    if(!produto){
+
+        return;
+
+    }
+
 
     if(
         !confirm(
@@ -1214,16 +1744,27 @@ function excluirProduto(id){
 
     }
 
+
     produtos =
         produtos.filter(
-            p => p.id !== id
+            p =>
+                p.id !== id
         );
+
 
     salvarDados();
 
     renderizarProdutos();
 
+    atualizarLimite();
+
 }
+
+
+/* =========================================
+   ADICIONAR POR LINHA
+   FREE + PRO
+========================================= */
 
 function adicionarPorLinha(){
 
@@ -1231,6 +1772,7 @@ function adicionarPorLinha(){
         document.getElementById(
             "linhasEstoque"
         ).value.trim();
+
 
     if(!texto){
 
@@ -1242,86 +1784,146 @@ function adicionarPorLinha(){
 
     }
 
+
     const linhas =
-        texto.split(/\r?\n/);
+        texto.split(
+            /\r?\n/
+        );
+
 
     let adicionados = 0;
 
-    linhas.forEach(linha => {
+
+    for(
+        const linha of linhas
+    ){
 
         const partes =
             linha.split("|");
 
-        if(partes.length < 2){
 
-            return;
+        if(
+            partes.length < 2
+        ){
+
+            continue;
 
         }
 
+
         const nome =
             partes[0].trim();
+
 
         const quantidade =
             Number(
                 partes[1].trim()
             );
 
+
         if(
             !nome ||
-            !Number.isFinite(quantidade) ||
+            !Number.isFinite(
+                quantidade
+            ) ||
             quantidade <= 0
         ){
 
-            return;
+            continue;
 
         }
+
 
         let produto =
             produtos.find(
                 p =>
-                    p.nome.toLowerCase()
-                    === nome.toLowerCase()
+                    p.nome
+                    .toLowerCase()
+                    ===
+                    nome.toLowerCase()
             );
+
+
+        /*
+           Se já existe, apenas adiciona estoque.
+           Isso NÃO consome limite de produto.
+        */
 
         if(produto){
 
             produto.quantidade =
-                Number(produto.quantidade || 0)
-                + quantidade;
 
-        }else{
+                Number(
+                    produto.quantidade || 0
+                )
+
+                +
+
+                quantidade;
+
+        }
+
+        /*
+           Se não existe, cria produto.
+           O Free precisa respeitar limite de 10.
+        */
+
+        else{
 
             if(
-                conta.plano !== "pro" &&
-                produtos.length >= 50
+                !isPro &&
+                produtos.length >= 10
             ){
 
-                return;
+                alert(
+                    "O plano gratuito atingiu o limite de 10 produtos. Faça upgrade para adicionar novos produtos."
+                );
+
+                break;
 
             }
+
 
             produto = {
 
                 id:
                     Date.now().toString()
-                    + Math.random(),
+                    +
+                    Math.random(),
 
-                nome,
-                categoria:"Importado",
-                codigo:"",
-                preco:0,
-                quantidade,
-                minimo:5,
-                icone:"📦",
+                nome:
+                    nome,
+
+                categoria:
+                    "Importado",
+
+                codigo:
+                    "",
+
+                preco:
+                    0,
+
+                quantidade:
+                    quantidade,
+
+                minimo:
+                    5,
+
+                icone:
+                    "📦",
 
                 criadoEm:
                     new Date().toISOString()
 
             };
 
-            produtos.push(produto);
+
+            produtos.push(
+                produto
+            );
 
         }
+
 
         movimentacoes.push({
 
@@ -1334,60 +1936,99 @@ function adicionarPorLinha(){
             tipo:
                 "entrada",
 
-            quantidade,
+            quantidade:
+                quantidade,
 
             data:
                 new Date().toISOString()
 
         });
 
+
         adicionados++;
 
-    });
+    }
+
 
     salvarDados();
+
 
     document.getElementById(
         "linhasEstoque"
     ).value = "";
 
+
     renderizarProdutos();
 
     renderizarHistorico();
 
-    alert(
-        adicionados +
-        " linha(s) processada(s)."
-    );
+    atualizarLimite();
+
+
+    if(
+        adicionados > 0
+    ){
+
+        alert(
+            adicionados +
+            " linha(s) processada(s)."
+        );
+
+    }
 
 }
+
+
+/* =========================================
+   IMPORTAR TXT
+   FREE + PRO
+========================================= */
 
 function importarTXT(event){
 
     const file =
         event.target.files[0];
 
-    if(!file) return;
+
+    if(!file){
+
+        return;
+
+    }
+
 
     const reader =
         new FileReader();
 
-    reader.onload = function(){
 
-        document.getElementById(
-            "linhasEstoque"
-        ).value =
-            reader.result;
+    reader.onload =
+        function(){
 
-        adicionarPorLinha();
+            document.getElementById(
+                "linhasEstoque"
+            ).value =
+                reader.result;
 
-    };
 
-    reader.readAsText(file);
+            adicionarPorLinha();
 
-    event.target.value = "";
+        };
+
+
+    reader.readAsText(
+        file
+    );
+
+
+    event.target.value =
+        "";
 
 }
+
+
+/* =========================================
+   HISTÓRICO
+========================================= */
 
 function renderizarHistorico(){
 
@@ -1396,100 +2037,108 @@ function renderizarHistorico(){
             "historico"
         );
 
+
     if(
         movimentacoes.length === 0
     ){
 
         div.innerHTML =
-            `<div class="empty">
+            `
+            <div class="empty">
                 Nenhuma movimentação.
-            </div>`;
+            </div>
+            `;
 
         return;
 
     }
 
+
     div.innerHTML =
+
         movimentacoes
         .slice()
         .reverse()
-        .slice(0,50)
-        .map(m => `
+        .slice(
+            0,
+            50
+        )
+        .map(
+            m => `
 
-            <div class="history-item">
+                <div class="history-item">
 
-                ${
-                    m.tipo === "entrada"
-                    ? "🟢 Entrada"
-                    : "🔴 Saída"
-                }
+                    ${
+                        m.tipo === "entrada"
+                        ? "🟢 Entrada"
+                        : "🔴 Saída"
+                    }
 
-                —
+                    —
 
-                <strong>
-                    ${escapeHtml(m.produto)}
-                </strong>
+                    <strong>
+                        ${escapeHtml(
+                            m.produto
+                        )}
+                    </strong>
 
-                —
+                    —
 
-                ${m.quantidade} unidade(s)
+                    ${m.quantidade}
+                    unidade(s)
 
-                <br>
+                    <br>
 
-                <small style="color:#64748b;">
-                    ${new Date(m.data)
-                        .toLocaleString("pt-BR")}
-                </small>
+                    <small
+                        style="color:#64748b;"
+                    >
 
-            </div>
+                        ${
+                            new Date(
+                                m.data
+                            ).toLocaleString(
+                                "pt-BR"
+                            )
+                        }
 
-        `)
+                    </small>
+
+                </div>
+
+            `
+        )
         .join("");
 
 }
 
-function baixarArquivo(nome, conteudo, tipo){
 
-    const blob =
-        new Blob(
-            [conteudo],
-            {type}
-        );
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const a =
-        document.createElement("a");
-
-    a.href = url;
-
-    a.download = nome;
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    URL.revokeObjectURL(url);
-
-}
+/* =========================================
+   CSV
+========================================= */
 
 function csvEscape(valor){
 
     const texto =
-        String(valor ?? "");
+        String(
+            valor ?? ""
+        );
+
 
     return '"' +
-        texto.replaceAll('"','""') +
+        texto.replaceAll(
+            '"',
+            '""'
+        )
+        +
         '"';
 
 }
 
+
 function gerarCSVProdutos(){
 
     const cabecalho =
+
         [
             "Nome",
             "Categoria",
@@ -1498,86 +2147,107 @@ function gerarCSVProdutos(){
             "Quantidade",
             "Minimo"
         ]
-        .map(csvEscape)
+
+        .map(
+            csvEscape
+        )
+
         .join(",");
 
+
     const linhas =
-        produtos.map(p =>
 
-            [
-                p.nome,
-                p.categoria,
-                p.codigo,
-                p.preco,
-                p.quantidade,
-                p.minimo
-            ]
-            .map(csvEscape)
-            .join(",")
+        produtos.map(
+            p =>
 
+                [
+                    p.nome,
+                    p.categoria,
+                    p.codigo,
+                    p.preco,
+                    p.quantidade,
+                    p.minimo
+                ]
+
+                .map(
+                    csvEscape
+                )
+
+                .join(",")
         );
 
+
     return [
+
         cabecalho,
+
         ...linhas
+
     ].join("\n");
 
 }
 
+
 function gerarCSVMovimentacoes(){
 
     const cabecalho =
+
         [
             "Produto",
             "Tipo",
             "Quantidade",
             "Data"
         ]
-        .map(csvEscape)
+
+        .map(
+            csvEscape
+        )
+
         .join(",");
 
+
     const linhas =
-        movimentacoes.map(m =>
 
-            [
-                m.produto,
-                m.tipo,
-                m.quantidade,
-                m.data
-            ]
-            .map(csvEscape)
-            .join(",")
+        movimentacoes.map(
+            m =>
 
+                [
+                    m.produto,
+                    m.tipo,
+                    m.quantidade,
+                    m.data
+                ]
+
+                .map(
+                    csvEscape
+                )
+
+                .join(",")
         );
 
+
     return [
+
         cabecalho,
+
         ...linhas
+
     ].join("\n");
 
 }
 
+
+/* =========================================
+   DOWNLOAD ZIP
+   FREE + PRO
+========================================= */
+
 async function baixarZIP(){
 
-    const produtosCSV =
-        gerarCSVProdutos();
-
-    const movimentosCSV =
-        gerarCSVMovimentacoes();
-
-    const json =
-        JSON.stringify(
-            produtos,
-            null,
-            2
-        );
-
-    /*
-      Usa JSZip pela CDN.
-      Não precisa instalar nada.
-    */
-
-    if(typeof JSZip === "undefined"){
+    if(
+        typeof JSZip ===
+        "undefined"
+    ){
 
         alert(
             "A biblioteca ZIP ainda está carregando. Tente novamente."
@@ -1587,51 +2257,129 @@ async function baixarZIP(){
 
     }
 
+
+    const produtosCSV =
+        gerarCSVProdutos();
+
+
+    const movimentosCSV =
+        gerarCSVMovimentacoes();
+
+
+    const json =
+        JSON.stringify(
+            produtos,
+            null,
+            2
+        );
+
+
     const zip =
         new JSZip();
+
 
     zip.file(
         "produtos.csv",
         produtosCSV
     );
 
+
     zip.file(
         "movimentacoes.csv",
         movimentosCSV
     );
+
 
     zip.file(
         "produtos.json",
         json
     );
 
+
     const arquivo =
         await zip.generateAsync({
             type:"blob"
         });
 
+
     const url =
-        URL.createObjectURL(arquivo);
+        URL.createObjectURL(
+            arquivo
+        );
+
 
     const a =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
-    a.href = url;
+
+    a.href =
+        url;
+
 
     a.download =
         "estoquepro-backup.zip";
 
-    document.body.appendChild(a);
+
+    document.body.appendChild(
+        a
+    );
+
 
     a.click();
 
+
     a.remove();
 
-    URL.revokeObjectURL(url);
+
+    URL.revokeObjectURL(
+        url
+    );
 
 }
 
+
+/* =========================================
+   RELATÓRIOS
+========================================= */
+
+function mostrarRelatorios(){
+
+    if(!isPro){
+
+        alert(
+            "📈 Relatórios avançados são exclusivos do EstoquePRO PRO."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "📈 Módulo de relatórios PRO em desenvolvimento."
+    );
+
+}
+
+
+/* =========================================
+   STRIPE
+========================================= */
+
 function assinarPro(){
+
+    /*
+      Aqui vamos colocar o Payment Link
+      do EstoquePRO PRO — R$ 9,99/mês.
+
+      Produto Stripe já criado:
+      EstoquePRO PRO
+
+      Price ID:
+      price_1UFzlH4f7FlgqSEJG2eh24nK
+    */
 
     alert(
         "O checkout do EstoquePRO PRO será conectado aqui."
@@ -1639,22 +2387,38 @@ function assinarPro(){
 
 }
 
+
+/* =========================================
+   LOGOUT
+========================================= */
+
 function logout(){
 
     localStorage.removeItem(
         "estoqueProLogado"
     );
 
+
     window.location.href =
         "index.html";
 
 }
 
+
+/* =========================================
+   INICIALIZAÇÃO
+========================================= */
+
 renderizarProdutos();
 
 renderizarHistorico();
 
+atualizarLimite();
+
 </script>
+
+
+<!-- JSZip -->
 
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">
