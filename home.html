@@ -1,10 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HBO Flix - Início</title>
+    <title>HBO Flix</title>
 
     <style>
         * {
@@ -13,178 +14,518 @@
             padding: 0;
         }
 
-        body {
-            background: #080808;
-            color: white;
-            font-family: Arial, Helvetica, sans-serif;
+        :root {
+            --bg: #050505;
+            --purple: #8b5cf6;
+            --text: #fff;
+            --muted: #b3b3b3;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+
         header {
-            height: 70px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 68px;
+            z-index: 100;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            background: #0b0b0b;
-            border-bottom: 1px solid #202020;
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            padding: 0 4%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,.95),
+                rgba(0,0,0,.55),
+                transparent
+            );
+            transition: .3s;
+        }
+
+        header.scrolled {
+            background: rgba(5,5,5,.96);
+            backdrop-filter: blur(12px);
         }
 
         .logo {
-            font-size: 25px;
+            color: #a879ff;
+            font-size: 27px;
             font-weight: 900;
-            letter-spacing: -1px;
-            color: #b88cff;
+            letter-spacing: -1.5px;
+            margin-right: 35px;
+            white-space: nowrap;
         }
 
         nav {
             display: flex;
-            gap: 25px;
+            gap: 23px;
+            align-items: center;
         }
 
         nav a {
-            color: #ccc;
+            color: #ddd;
             text-decoration: none;
             font-size: 14px;
+            transition: .2s;
         }
 
-        nav a:hover {
+        nav a:hover,
+        nav a.active {
             color: white;
+            font-weight: bold;
         }
 
-        .user {
+        .header-right {
+            margin-left: auto;
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        #userName {
-            font-size: 14px;
-            color: #ddd;
-        }
-
-        .logout {
-            border: 0;
-            background: #222;
-            color: white;
-            padding: 9px 14px;
-            border-radius: 7px;
-            cursor: pointer;
-        }
-
-        .logout:hover {
-            background: #333;
-        }
-
-        .hero {
-            min-height: 430px;
-            padding: 80px 7%;
-            display: flex;
-            align-items: center;
-            background:
-                linear-gradient(90deg, #080808 0%, rgba(8,8,8,.85) 45%, rgba(8,8,8,.15) 100%),
-                linear-gradient(180deg, #171020, #080808);
-        }
-
-        .hero-content {
-            max-width: 560px;
-        }
-
-        .tag {
-            color: #b88cff;
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        h1 {
-            font-size: clamp(40px, 6vw, 70px);
-            line-height: .95;
-            margin-bottom: 20px;
-        }
-
-        .description {
-            color: #bbb;
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .watch {
-            background: white;
-            color: black;
-            border: 0;
-            padding: 13px 22px;
-            border-radius: 7px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .section {
-            padding: 35px 5%;
-        }
-
-        .section h2 {
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             gap: 18px;
         }
 
-        .card {
-            height: 245px;
-            background: #151515;
-            border-radius: 9px;
+        .search-button {
+            border: 0;
+            background: transparent;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .profile {
+            width: 35px;
+            height: 35px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #8b5cf6, #4c1d95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* SEARCH */
+
+        .search-box {
+            position: fixed;
+            top: 68px;
+            right: 4%;
+            width: min(400px, 90%);
+            z-index: 99;
+            display: none;
+        }
+
+        .search-box.show {
+            display: block;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 17px;
+            border-radius: 7px;
+            border: 1px solid #444;
+            background: rgba(10,10,10,.97);
+            color: white;
+            outline: none;
+            font-size: 15px;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 680px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 120px 7% 90px;
             overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 75% 35%,
+                    rgba(123,63,190,.42),
+                    transparent 38%
+                ),
+                linear-gradient(
+                    90deg,
+                    #050505 0%,
+                    #070707 38%,
+                    rgba(5,5,5,.45) 72%,
+                    #050505 100%
+                );
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 180px;
+            background: linear-gradient(
+                transparent,
+                var(--bg)
+            );
+        }
+
+        .hero-content {
+            max-width: 610px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            color: #b78cff;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 7vw, 82px);
+            line-height: .94;
+            letter-spacing: -3px;
+            margin-bottom: 22px;
+        }
+
+        .hero-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 17px;
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        .age {
+            border: 1px solid #777;
+            padding: 2px 6px;
+        }
+
+        .hero-description {
+            color: #c5c5c5;
+            line-height: 1.6;
+            font-size: 16px;
+            max-width: 570px;
+            margin-bottom: 27px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 6px;
+            padding: 13px 23px;
+            font-weight: bold;
+            font-size: 15px;
             cursor: pointer;
             transition: .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: white;
+            color: black;
+        }
+
+        .btn-secondary {
+            background: rgba(80,80,80,.7);
+            color: white;
+        }
+
+        /* SECTIONS */
+
+        main {
+            position: relative;
+            z-index: 3;
+            margin-top: -50px;
+        }
+
+        .section {
+            padding: 20px 4% 30px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .section-title h2 {
+            font-size: 21px;
+        }
+
+        .see-all {
+            color: #999;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 7px 2px 15px;
+            scrollbar-width: none;
+        }
+
+        .row::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* CARDS */
+
+        .card {
+            flex: 0 0 180px;
+            height: 270px;
+            border-radius: 7px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: #151515;
+            transition: transform .25s, box-shadow .25s;
             border: 1px solid #222;
         }
 
         .card:hover {
-            transform: scale(1.03);
-            border-color: #444;
+            transform: scale(1.045);
+            z-index: 5;
+            box-shadow: 0 15px 35px rgba(0,0,0,.6);
         }
 
         .poster {
-            height: 190px;
-            background: linear-gradient(145deg, #27143d, #111);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background:
+                linear-gradient(
+                    145deg,
+                    #29164b,
+                    #101010
+                );
+        }
+
+        .poster-placeholder {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #aaa;
-            font-size: 14px;
-        }
-
-        .card-title {
-            padding: 12px;
-            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+            background:
+                linear-gradient(
+                    145deg,
+                    #321b55,
+                    #0d0d0d
+                );
+            color: #ddd;
             font-weight: bold;
         }
 
-        @media (max-width: 700px) {
-            nav {
-                display: none;
-            }
+        .card-gradient {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 80px;
+            background: linear-gradient(
+                transparent,
+                rgba(0,0,0,.95)
+            );
+        }
+
+        .card-info {
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-year {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            display: none;
+            padding: 50px 20px;
+            text-align: center;
+            color: #999;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: rgba(0,0,0,.82);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: min(900px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #121212;
+            border: 1px solid #292929;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 30px 100px rgba(0,0,0,.8);
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            width: 35px;
+            height: 35px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(0,0,0,.7);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .modal-top {
+            min-height: 310px;
+            padding: 45px;
+            display: flex;
+            align-items: end;
+            background:
+                linear-gradient(
+                    90deg,
+                    #121212,
+                    rgba(18,18,18,.55),
+                    #121212
+                );
+        }
+
+        .modal-content {
+            max-width: 600px;
+        }
+
+        .modal-content h2 {
+            font-size: 40px;
+            margin-bottom: 13px;
+        }
+
+        .modal-content p {
+            color: #bbb;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* PROFILE MENU */
+
+        .profile-menu {
+            position: fixed;
+            top: 58px;
+            right: 4%;
+            width: 180px;
+            background: #171717;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 8px;
+            z-index: 200;
+            display: none;
+        }
+
+        .profile-menu.show {
+            display: block;
+        }
+
+        .profile-menu button {
+            width: 100%;
+            padding: 11px;
+            background: transparent;
+            border: 0;
+            color: white;
+            text-align: left;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .profile-menu button:hover {
+            background: #282828;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
 
             header {
                 padding: 0 20px;
             }
 
+            .logo {
+                margin-right: 15px;
+            }
+
+            nav {
+                display: none;
+            }
+
             .hero {
-                padding: 60px 25px;
+                min-height: 620px;
+                padding: 120px 25px 80px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
             }
 
             .section {
-                padding: 30px 20px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .card {
+                flex-basis: 145px;
+                height: 220px;
+            }
+
+            .modal-top {
+                padding: 35px 25px;
             }
         }
     </style>
@@ -192,84 +533,925 @@
 
 <body>
 
-<header>
-    <div class="logo">HBO FLIX</div>
+<header id="header">
+
+    <div class="logo">
+        HBO FLIX
+    </div>
 
     <nav>
-        <a href="home.html">Início</a>
-        <a href="#">Filmes</a>
-        <a href="#">Séries</a>
-        <a href="#">Minha lista</a>
+        <a href="#inicio" class="active">Início</a>
+        <a href="#filmes">Filmes</a>
+        <a href="#series">Séries</a>
+        <a href="#minha-lista">Minha lista</a>
     </nav>
 
-    <div class="user">
-        <span id="userName">Usuário</span>
-        <button class="logout" onclick="logout()">Sair</button>
+    <div class="header-right">
+
+        <button
+            class="search-button"
+            onclick="toggleSearch()"
+            aria-label="Pesquisar"
+        >
+            🔍
+        </button>
+
+        <div
+            class="profile"
+            id="profileButton"
+            onclick="toggleProfile()"
+        >
+            U
+        </div>
+
     </div>
+
 </header>
 
-<section class="hero">
+<div class="search-box" id="searchBox">
+
+    <input
+        type="search"
+        id="searchInput"
+        placeholder="Buscar filmes e séries..."
+        oninput="searchTitles()"
+    >
+
+</div>
+
+<div class="profile-menu" id="profileMenu">
+
+    <button onclick="showProfile()">
+        👤 Minha conta
+    </button>
+
+    <button onclick="logout()">
+        🚪 Sair
+    </button>
+
+</div>
+
+<!-- HERO -->
+
+<section class="hero" id="inicio">
+
     <div class="hero-content">
-        <div class="tag">HBO FLIX</div>
 
-        <h1>Seu entretenimento em um só lugar.</h1>
+        <div class="hero-label">
+            HBO FLIX ORIGINAL
+        </div>
 
-        <p class="description">
-            Descubra filmes e séries e continue assistindo de onde parou.
+        <h1>
+            Seu entretenimento começa aqui.
+        </h1>
+
+        <div class="hero-info">
+            <span>2026</span>
+            <span class="age">14</span>
+            <span>Filmes e séries</span>
+        </div>
+
+        <p class="hero-description">
+            Encontre seus filmes e séries favoritos em uma experiência
+            criada para assistir em qualquer dispositivo.
         </p>
 
-        <button class="watch" onclick="alert('Player será conectado na próxima etapa.')">
-            ▶ Assistir agora
+        <div class="hero-buttons">
+
+            <button
+                class="btn btn-primary"
+                onclick="openFeatured()"
+            >
+                ▶ Assistir
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="addFeatured()"
+            >
+                ＋ Minha lista
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<main>
+
+    <!-- CONTINUAR -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Continuar assistindo</h2>
+        </div>
+
+        <div
+            class="row"
+            id="continueRow"
+        ></div>
+
+    </section>
+
+    <!-- POPULARES -->
+
+    <section class="section" id="filmes">
+
+        <div class="section-title">
+
+            <h2>🔥 Populares</h2>
+
+            <span class="see-all">
+                Ver tudo
+            </span>
+
+        </div>
+
+        <div
+            class="row"
+            id="popularRow"
+        ></div>
+
+    </section>
+
+    <!-- FILMES -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>🎬 Filmes</h2>
+        </div>
+
+        <div
+            class="row"
+            id="moviesRow"
+        ></div>
+
+    </section>
+
+    <!-- SERIES -->
+
+    <section class="section" id="series">
+
+        <div class="section-title">
+            <h2>📺 Séries</h2>
+        </div>
+
+        <div
+            class="row"
+            id="seriesRow"
+        ></div>
+
+    </section>
+
+    <!-- MINHA LISTA -->
+
+    <section class="section" id="minha-lista">
+
+        <div class="section-title">
+            <h2>❤️ Minha lista</h2>
+        </div>
+
+        <div
+            class="row"
+            id="myListRow"
+        ></div>
+
+        <div
+            class="empty"
+            id="emptyList"
+        >
+            Você ainda não adicionou títulos à sua lista.
+        </div>
+
+    </section>
+
+    <!-- BUSCA -->
+
+    <section class="section" id="searchResultsSection" style="display:none">
+
+        <div class="section-title">
+            <h2>Resultados da busca</h2>
+        </div>
+
+        <div
+            class="row"
+            id="searchResults"
+        ></div>
+
+    </section>
+
+</main>
+
+<!-- MODAL -->
+
+<div
+    class="modal"
+    id="movieModal"
+    onclick="closeModalOutside(event)"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >
+            ×
         </button>
+
+        <div class="modal-top">
+
+            <div class="modal-content">
+
+                <h2 id="modalTitle">
+                    Título
+                </h2>
+
+                <div class="hero-info">
+                    <span id="modalYear">2026</span>
+                    <span>HD</span>
+                </div>
+
+                <p id="modalDescription">
+                    Descrição do título.
+                </p>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="playSelected()"
+                >
+                    ▶ Assistir
+                </button>
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="addSelected()"
+                >
+                    ＋ Minha lista
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
-</section>
 
-<section class="section">
-    <h2>Em destaque</h2>
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="poster">CAPA</div>
-            <div class="card-title">Filme em destaque</div>
-        </div>
-
-        <div class="card">
-            <div class="poster">CAPA</div>
-            <div class="card-title">Novo lançamento</div>
-        </div>
-
-        <div class="card">
-            <div class="poster">CAPA</div>
-            <div class="card-title">Série popular</div>
-        </div>
-
-        <div class="card">
-            <div class="poster">CAPA</div>
-            <div class="card-title">Recomendado</div>
-        </div>
-
-    </div>
-</section>
+</div>
 
 <script>
-    const conta = localStorage.getItem("hboFlixConta");
 
-    // Se não existir conta, volta para o cadastro/login
-    if (!conta) {
+    /* =========================================
+       CONTA
+    ========================================= */
+
+    const contaSalva =
+        localStorage.getItem("hboFlixConta");
+
+    if (!contaSalva) {
+
         window.location.href = "index.html";
-    } else {
-        const usuario = JSON.parse(conta);
 
-        document.getElementById("userName").textContent =
-            usuario.nome || usuario.email;
     }
+
+    let conta = null;
+
+    try {
+        conta = JSON.parse(contaSalva);
+    } catch (e) {
+        window.location.href = "index.html";
+    }
+
+    if (conta) {
+
+        const inicial =
+            (conta.nome || conta.email || "U")
+            .charAt(0)
+            .toUpperCase();
+
+        document.getElementById("profileButton")
+            .textContent = inicial;
+    }
+
+
+    /* =========================================
+       CATÁLOGO
+       
+       Os objetos abaixo são exemplos de títulos.
+       Para vídeos reais, coloque URLs autorizadas
+       no campo "video".
+    ========================================= */
+
+    const catalogo = [
+
+        {
+            id: 1,
+            titulo: "Horizonte",
+            ano: 2026,
+            tipo: "filme",
+            descricao: "Uma nova aventura começa quando tudo parece perdido.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 2,
+            titulo: "Código Zero",
+            ano: 2026,
+            tipo: "filme",
+            descricao: "Um grupo precisa descobrir a origem de um misterioso código.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 3,
+            titulo: "Além do Tempo",
+            ano: 2025,
+            tipo: "filme",
+            descricao: "Uma história sobre escolhas que podem mudar o futuro.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 4,
+            titulo: "Distrito 9",
+            ano: 2025,
+            tipo: "filme",
+            descricao: "Uma cidade esconde segredos que ninguém deveria descobrir.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 5,
+            titulo: "Última Chamada",
+            ano: 2025,
+            tipo: "filme",
+            descricao: "Uma ligação inesperada muda completamente uma noite normal.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 6,
+            titulo: "A Jornada",
+            ano: 2024,
+            tipo: "filme",
+            descricao: "Uma jornada através de lugares desconhecidos.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 7,
+            titulo: "Operação Eclipse",
+            ano: 2024,
+            tipo: "filme",
+            descricao: "Uma missão secreta precisa ser concluída antes do amanhecer.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 8,
+            titulo: "Cidade Sombria",
+            ano: 2024,
+            tipo: "filme",
+            descricao: "Nada é o que parece em uma cidade cercada de mistérios.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 9,
+            titulo: "Depois da Meia-Noite",
+            ano: 2023,
+            tipo: "filme",
+            descricao: "Uma noite que ninguém conseguirá esquecer.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 10,
+            titulo: "O Último Sinal",
+            ano: 2023,
+            tipo: "filme",
+            descricao: "Um sinal misterioso aparece no céu.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 11,
+            titulo: "Conexão",
+            ano: 2026,
+            tipo: "serie",
+            descricao: "Pessoas desconhecidas acabam conectadas por um segredo.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 12,
+            titulo: "Arquivo 21",
+            ano: 2025,
+            tipo: "serie",
+            descricao: "Uma investigação revela um arquivo que deveria permanecer secreto.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 13,
+            titulo: "Nova Geração",
+            ano: 2025,
+            tipo: "serie",
+            descricao: "Uma nova geração precisa enfrentar um mundo completamente diferente.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 14,
+            titulo: "Linha Vermelha",
+            ano: 2024,
+            tipo: "serie",
+            descricao: "Uma equipe trabalha para impedir uma ameaça internacional.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 15,
+            titulo: "Segredos",
+            ano: 2024,
+            tipo: "serie",
+            descricao: "Uma família aparentemente perfeita guarda muitos segredos.",
+            poster: "",
+            video: ""
+        },
+
+        {
+            id: 16,
+            titulo: "Ponto Final",
+            ano: 2023,
+            tipo: "serie",
+            descricao: "Uma investigação chega ao seu momento decisivo.",
+            poster: "",
+            video: ""
+        }
+
+    ];
+
+
+    /* =========================================
+       GERADOR DE CARDS
+    ========================================= */
+
+    function criarCard(item) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        card.onclick = function() {
+            abrirTitulo(item.id);
+        };
+
+        let imagem = "";
+
+        if (item.poster) {
+
+            imagem =
+                `<img class="poster"
+                src="${item.poster}"
+                alt="${item.titulo}"
+                loading="lazy">`;
+
+        } else {
+
+            imagem =
+                `<div class="poster-placeholder">
+                    ${item.titulo}
+                </div>`;
+        }
+
+        card.innerHTML = `
+            ${imagem}
+
+            <div class="card-gradient"></div>
+
+            <div class="card-info">
+
+                <div class="card-title">
+                    ${item.titulo}
+                </div>
+
+                <div class="card-year">
+                    ${item.ano}
+                </div>
+
+            </div>
+        `;
+
+        return card;
+    }
+
+
+    function preencherLinha(elementId, itens) {
+
+        const linha =
+            document.getElementById(elementId);
+
+        linha.innerHTML = "";
+
+        itens.forEach(item => {
+
+            linha.appendChild(
+                criarCard(item)
+            );
+
+        });
+    }
+
+
+    /* =========================================
+       HOME
+    ========================================= */
+
+    const populares =
+        catalogo.slice(0, 10);
+
+    const filmes =
+        catalogo.filter(
+            item => item.tipo === "filme"
+        );
+
+    const series =
+        catalogo.filter(
+            item => item.tipo === "serie"
+        );
+
+    preencherLinha(
+        "popularRow",
+        populares
+    );
+
+    preencherLinha(
+        "moviesRow",
+        filmes
+    );
+
+    preencherLinha(
+        "seriesRow",
+        series
+    );
+
+
+    /* =========================================
+       MINHA LISTA
+    ========================================= */
+
+    function getMyList() {
+
+        try {
+
+            return JSON.parse(
+                localStorage.getItem("hboFlixMinhaLista")
+            ) || [];
+
+        } catch {
+
+            return [];
+        }
+    }
+
+
+    function updateMyList() {
+
+        const ids =
+            getMyList();
+
+        const items =
+            catalogo.filter(
+                item => ids.includes(item.id)
+            );
+
+        preencherLinha(
+            "myListRow",
+            items
+        );
+
+        document.getElementById("emptyList")
+            .style.display =
+                items.length ? "none" : "block";
+    }
+
+
+    function addToList(id) {
+
+        let lista =
+            getMyList();
+
+        if (!lista.includes(id)) {
+
+            lista.push(id);
+
+            localStorage.setItem(
+                "hboFlixMinhaLista",
+                JSON.stringify(lista)
+            );
+
+        }
+
+        updateMyList();
+    }
+
+
+    function addSelected() {
+
+        if (selectedMovie) {
+
+            addToList(
+                selectedMovie.id
+            );
+
+            alert(
+                "Adicionado à sua lista."
+            );
+        }
+    }
+
+
+    function addFeatured() {
+
+        if (catalogo.length) {
+
+            addToList(
+                catalogo[0].id
+            );
+
+            alert(
+                "Adicionado à sua lista."
+            );
+        }
+    }
+
+
+    updateMyList();
+
+
+    /* =========================================
+       MODAL
+    ========================================= */
+
+    let selectedMovie = null;
+
+    function abrirTitulo(id) {
+
+        selectedMovie =
+            catalogo.find(
+                item => item.id === id
+            );
+
+        if (!selectedMovie) return;
+
+        document.getElementById("modalTitle")
+            .textContent =
+                selectedMovie.titulo;
+
+        document.getElementById("modalYear")
+            .textContent =
+                selectedMovie.ano;
+
+        document.getElementById("modalDescription")
+            .textContent =
+                selectedMovie.descricao;
+
+        document.getElementById("movieModal")
+            .classList.add("show");
+    }
+
+
+    function closeModal() {
+
+        document.getElementById("movieModal")
+            .classList.remove("show");
+    }
+
+
+    function closeModalOutside(event) {
+
+        if (
+            event.target.id === "movieModal"
+        ) {
+
+            closeModal();
+        }
+    }
+
+
+    function openFeatured() {
+
+        if (catalogo.length) {
+
+            abrirTitulo(
+                catalogo[0].id
+            );
+        }
+    }
+
+
+    function playSelected() {
+
+        if (!selectedMovie) return;
+
+        if (!selectedMovie.video) {
+
+            alert(
+                "Este título ainda não possui um vídeo autorizado conectado."
+            );
+
+            return;
+        }
+
+        /*
+          Na próxima etapa podemos abrir
+          um player próprio aqui.
+        */
+
+        window.location.href =
+            "player.html?id=" +
+            encodeURIComponent(
+                selectedMovie.id
+            );
+    }
+
+
+    /* =========================================
+       PESQUISA
+    ========================================= */
+
+    function toggleSearch() {
+
+        const box =
+            document.getElementById("searchBox");
+
+        box.classList.toggle("show");
+
+        if (box.classList.contains("show")) {
+
+            document.getElementById("searchInput")
+                .focus();
+        }
+    }
+
+
+    function searchTitles() {
+
+        const termo =
+            document.getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+        const section =
+            document.getElementById(
+                "searchResultsSection"
+            );
+
+        const results =
+            document.getElementById(
+                "searchResults"
+            );
+
+        if (!termo) {
+
+            section.style.display = "none";
+
+            return;
+        }
+
+        const encontrados =
+            catalogo.filter(item =>
+                item.titulo
+                    .toLowerCase()
+                    .includes(termo)
+            );
+
+        section.style.display = "block";
+
+        results.innerHTML = "";
+
+        encontrados.forEach(item => {
+
+            results.appendChild(
+                criarCard(item)
+            );
+
+        });
+
+        section.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+
+    /* =========================================
+       PERFIL
+    ========================================= */
+
+    function toggleProfile() {
+
+        document.getElementById("profileMenu")
+            .classList.toggle("show");
+    }
+
+
+    function showProfile() {
+
+        if (!conta) return;
+
+        alert(
+            "Conta: " +
+            conta.email +
+            "\nNome: " +
+            conta.nome
+        );
+    }
+
 
     function logout() {
-        localStorage.removeItem("hboFlixLogado");
-        window.location.href = "index.html";
+
+        localStorage.removeItem(
+            "hboFlixLogado"
+        );
+
+        window.location.href =
+            "index.html";
     }
+
+
+    /* =========================================
+       HEADER AO ROLAR
+    ========================================= */
+
+    window.addEventListener(
+        "scroll",
+        function() {
+
+            const header =
+                document.getElementById(
+                    "header"
+                );
+
+            if (window.scrollY > 40) {
+
+                header.classList.add(
+                    "scrolled"
+                );
+
+            } else {
+
+                header.classList.remove(
+                    "scrolled"
+                );
+            }
+        }
+    );
+
+
+    /* =========================================
+       ESC
+    ========================================= */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Escape") {
+
+                closeModal();
+
+                document
+                    .getElementById("searchBox")
+                    .classList.remove("show");
+
+                document
+                    .getElementById("profileMenu")
+                    .classList.remove("show");
+            }
+        }
+    );
+
 </script>
 
 </body>
 </html>
+```
