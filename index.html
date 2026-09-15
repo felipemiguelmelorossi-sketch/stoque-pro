@@ -1,319 +1,186 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBO FLIX - Entrar</title>
 
-    <title>HBO Flix — Teste Grátis</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+body {
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.85)),
+        #111;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        body {
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at top, #24133b 0%, #080808 45%),
-                #080808;
-            color: white;
-            font-family: Arial, Helvetica, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+.box {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px;
+    background: rgba(20,20,20,.95);
+    border-radius: 8px;
+}
 
-        .container {
-            width: 100%;
-            max-width: 430px;
-            background: rgba(17,17,17,.96);
-            border: 1px solid #292929;
-            border-radius: 16px;
-            padding: 35px;
-            box-shadow: 0 25px 80px rgba(0,0,0,.65);
-        }
+.logo {
+    text-align: center;
+    color: #e50914;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 30px;
+}
 
-        .logo {
-            text-align: center;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: -2px;
-            color: #a879ff;
-            margin-bottom: 8px;
-        }
+h1 {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
 
-        .subtitle {
-            text-align: center;
-            color: #999;
-            font-size: 14px;
-            margin-bottom: 28px;
-        }
+input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 14px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: white;
+    outline: none;
+}
 
-        .free-badge {
-            width: fit-content;
-            margin: 0 auto 22px;
-            padding: 7px 13px;
-            border-radius: 30px;
-            background: rgba(139,92,246,.14);
-            border: 1px solid rgba(167,127,255,.35);
-            color: #c7a9ff;
-            font-size: 12px;
-            font-weight: bold;
-        }
+input:focus {
+    border-color: white;
+}
 
-        .tabs {
-            display: flex;
-            gap: 4px;
-            background: #191919;
-            padding: 4px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
+button {
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 4px;
+    background: #e50914;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        .tab {
-            flex: 1;
-            border: 0;
-            background: transparent;
-            color: #888;
-            padding: 11px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+button:hover {
+    background: #f6121d;
+}
 
-        .tab.active {
-            background: #2a2a2a;
-            color: white;
-        }
+.switch {
+    margin-top: 20px;
+    color: #aaa;
+    text-align: center;
+}
 
-        .form {
-            display: none;
-        }
+.switch span {
+    color: white;
+    cursor: pointer;
+}
 
-        .form.active {
-            display: block;
-        }
+.error {
+    color: #ff5c5c;
+    margin-bottom: 15px;
+    display: none;
+}
 
-        label {
-            display: block;
-            color: #aaa;
-            font-size: 13px;
-            margin-bottom: 7px;
-        }
+.success {
+    color: #4ade80;
+    margin-bottom: 15px;
+    display: none;
+}
 
-        input {
-            width: 100%;
-            padding: 13px;
-            margin-bottom: 17px;
-            border-radius: 7px;
-            border: 1px solid #303030;
-            background: #191919;
-            color: white;
-            outline: none;
-            font-size: 14px;
-        }
-
-        input:focus {
-            border-color: #8b5cf6;
-        }
-
-        .main-button {
-            width: 100%;
-            padding: 14px;
-            border: 0;
-            border-radius: 8px;
-            background: linear-gradient(90deg, #7746d8, #a66cff);
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: .2s;
-        }
-
-        .main-button:hover {
-            transform: translateY(-1px);
-            opacity: .92;
-        }
-
-        .error,
-        .success {
-            display: none;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-
-        .error {
-            color: #ff7070;
-        }
-
-        .success {
-            color: #6ee7a0;
-        }
-
-        .info {
-            margin-top: 22px;
-            text-align: center;
-            color: #777;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 500px) {
-            .container {
-                padding: 28px 22px;
-            }
-        }
-    </style>
+#cadastro {
+    display: none;
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="box">
 
-    <div class="logo">
-        HBO FLIX
-    </div>
-
-    <div class="subtitle">
-        Filmes e séries em um só lugar.
-    </div>
-
-    <div class="free-badge">
-        ✨ TESTE GRÁTIS
-    </div>
-
-    <div class="tabs">
-
-        <button
-            class="tab active"
-            id="loginTab"
-            onclick="showLogin()"
-        >
-            Entrar
-        </button>
-
-        <button
-            class="tab"
-            id="registerTab"
-            onclick="showRegister()"
-        >
-            Criar conta
-        </button>
-
-    </div>
-
+    <div class="logo">HBO FLIX</div>
 
     <!-- LOGIN -->
+    <div id="login">
 
-    <div
-        class="form active"
-        id="loginForm"
-    >
+        <h1>Entrar</h1>
 
-        <label for="loginEmail">
-            E-mail
-        </label>
+        <div id="loginError" class="error"></div>
 
         <input
             id="loginEmail"
             type="email"
-            placeholder="seu@email.com"
-            autocomplete="email"
+            placeholder="E-mail"
         >
-
-        <label for="loginPassword">
-            Senha
-        </label>
 
         <input
-            id="loginPassword"
+            id="loginSenha"
             type="password"
-            placeholder="Sua senha"
-            autocomplete="current-password"
+            placeholder="Senha"
         >
 
-        <div
-            class="error"
-            id="loginError"
-        ></div>
-
-        <button
-            class="main-button"
-            onclick="login()"
-        >
-            Entrar gratuitamente
+        <button onclick="entrar()">
+            Entrar
         </button>
+
+        <div class="switch">
+            Não possui conta?
+            <span onclick="mostrarCadastro()">
+                Criar conta
+            </span>
+        </div>
 
     </div>
 
 
     <!-- CADASTRO -->
+    <div id="cadastro">
 
-    <div
-        class="form"
-        id="registerForm"
-    >
+        <h1>Criar conta</h1>
 
-        <label for="registerName">
-            Nome
-        </label>
+        <div id="cadastroError" class="error"></div>
+        <div id="cadastroSuccess" class="success"></div>
 
         <input
-            id="registerName"
+            id="nome"
             type="text"
             placeholder="Seu nome"
-            autocomplete="name"
         >
 
-        <label for="registerEmail">
-            E-mail
-        </label>
-
         <input
-            id="registerEmail"
+            id="cadastroEmail"
             type="email"
-            placeholder="seu@email.com"
-            autocomplete="email"
+            placeholder="E-mail"
         >
-
-        <label for="registerPassword">
-            Senha
-        </label>
 
         <input
-            id="registerPassword"
+            id="cadastroSenha"
             type="password"
-            placeholder="Crie uma senha"
-            autocomplete="new-password"
+            placeholder="Senha"
         >
 
-        <div
-            class="error"
-            id="registerError"
-        ></div>
-
-        <div
-            class="success"
-            id="registerSuccess"
-        ></div>
-
-        <button
-            class="main-button"
-            onclick="createAccount()"
-        >
-            Criar conta grátis
+        <button onclick="cadastrar()">
+            Criar conta
         </button>
 
-    </div>
+        <div class="switch">
+            Já possui conta?
+            <span onclick="mostrarLogin()">
+                Entrar
+            </span>
+        </div>
 
-
-    <div class="info">
-        Conta gratuita para testes do HBO Flix.
-        Nenhum pagamento é necessário.
     </div>
 
 </div>
@@ -321,269 +188,162 @@
 
 <script>
 
-    /* ================================
-       TROCAR ENTRE LOGIN E CADASTRO
-    ================================= */
+function mostrarCadastro() {
 
-    function showLogin() {
+    document.getElementById("login").style.display = "none";
 
-        document
-            .getElementById("loginForm")
-            .classList.add("active");
+    document.getElementById("cadastro").style.display = "block";
 
-        document
-            .getElementById("registerForm")
-            .classList.remove("active");
+}
 
-        document
-            .getElementById("loginTab")
-            .classList.add("active");
 
-        document
-            .getElementById("registerTab")
-            .classList.remove("active");
+function mostrarLogin() {
+
+    document.getElementById("cadastro").style.display = "none";
+
+    document.getElementById("login").style.display = "block";
+
+}
+
+
+function cadastrar() {
+
+    const nome =
+        document.getElementById("nome").value.trim();
+
+    const email =
+        document.getElementById("cadastroEmail").value.trim();
+
+    const senha =
+        document.getElementById("cadastroSenha").value;
+
+
+    const error =
+        document.getElementById("cadastroError");
+
+    const success =
+        document.getElementById("cadastroSuccess");
+
+
+    error.style.display = "none";
+    success.style.display = "none";
+
+
+    if (!nome || !email || !senha) {
+
+        error.textContent =
+            "Preencha todos os campos.";
+
+        error.style.display = "block";
+
+        return;
     }
 
 
-    function showRegister() {
+    if (senha.length < 4) {
 
-        document
-            .getElementById("registerForm")
-            .classList.add("active");
+        error.textContent =
+            "A senha precisa ter pelo menos 4 caracteres.";
 
-        document
-            .getElementById("loginForm")
-            .classList.remove("active");
+        error.style.display = "block";
 
-        document
-            .getElementById("registerTab")
-            .classList.add("active");
-
-        document
-            .getElementById("loginTab")
-            .classList.remove("active");
+        return;
     }
 
 
-    /* ================================
-       CRIAR CONTA
-    ================================= */
-
-    function createAccount() {
-
-        const nome =
-            document
-                .getElementById("registerName")
-                .value
-                .trim();
-
-        const email =
-            document
-                .getElementById("registerEmail")
-                .value
-                .trim()
-                .toLowerCase();
-
-        const senha =
-            document
-                .getElementById("registerPassword")
-                .value;
-
-        const error =
-            document.getElementById(
-                "registerError"
-            );
-
-        const success =
-            document.getElementById(
-                "registerSuccess"
-            );
-
-        error.style.display = "none";
-        success.style.display = "none";
+    const conta = {
+        nome: nome,
+        email: email,
+        senha: senha
+    };
 
 
-        if (!nome || !email || !senha) {
-
-            error.textContent =
-                "Preencha todos os campos.";
-
-            error.style.display = "block";
-
-            return;
-        }
+    localStorage.setItem(
+        "hboFlixConta",
+        JSON.stringify(conta)
+    );
 
 
-        if (!email.includes("@")) {
-
-            error.textContent =
-                "Digite um e-mail válido.";
-
-            error.style.display = "block";
-
-            return;
-        }
+    localStorage.setItem(
+        "hboFlixLogado",
+        "true"
+    );
 
 
-        if (senha.length < 6) {
+    success.textContent =
+        "Conta criada! Entrando...";
 
-            error.textContent =
-                "A senha precisa ter pelo menos 6 caracteres.";
-
-            error.style.display = "block";
-
-            return;
-        }
+    success.style.display = "block";
 
 
-        /*
-         * Conta salva localmente apenas
-         * para o ambiente de testes.
-         */
+    setTimeout(function() {
 
-        const conta = {
-            nome: nome,
-            email: email,
-            senha: senha
-        };
+        window.location.href = "home.html";
+
+    }, 700);
+
+}
 
 
-        localStorage.setItem(
-            "hboFlixConta",
-            JSON.stringify(conta)
-        );
+function entrar() {
 
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const senha =
+        document.getElementById("loginSenha").value;
+
+
+    const error =
+        document.getElementById("loginError");
+
+
+    error.style.display = "none";
+
+
+    const contaSalva =
+        localStorage.getItem("hboFlixConta");
+
+
+    if (!contaSalva) {
+
+        error.textContent =
+            "Nenhuma conta foi criada neste navegador.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    const conta =
+        JSON.parse(contaSalva);
+
+
+    if (
+        email === conta.email &&
+        senha === conta.senha
+    ) {
 
         localStorage.setItem(
             "hboFlixLogado",
             "true"
         );
 
+        window.location.href = "home.html";
 
-        success.textContent =
-            "Conta criada! Abrindo o HBO Flix...";
+    } else {
 
-        success.style.display = "block";
+        error.textContent =
+            "E-mail ou senha incorretos.";
 
+        error.style.display = "block";
 
-        setTimeout(function() {
-
-            window.location.href =
-                "home.html";
-
-        }, 700);
     }
 
-
-    /* ================================
-       LOGIN
-    ================================= */
-
-    function login() {
-
-        const email =
-            document
-                .getElementById("loginEmail")
-                .value
-                .trim()
-                .toLowerCase();
-
-        const senha =
-            document
-                .getElementById("loginPassword")
-                .value;
-
-        const error =
-            document.getElementById(
-                "loginError"
-            );
-
-        error.style.display = "none";
-
-
-        const contaSalva =
-            localStorage.getItem(
-                "hboFlixConta"
-            );
-
-
-        if (!contaSalva) {
-
-            error.textContent =
-                "Você ainda não possui uma conta neste navegador.";
-
-            error.style.display = "block";
-
-            return;
-        }
-
-
-        let conta;
-
-
-        try {
-
-            conta =
-                JSON.parse(contaSalva);
-
-        } catch {
-
-            error.textContent =
-                "Não foi possível carregar sua conta.";
-
-            error.style.display = "block";
-
-            return;
-        }
-
-
-        if (
-            email === conta.email &&
-            senha === conta.senha
-        ) {
-
-            localStorage.setItem(
-                "hboFlixLogado",
-                "true"
-            );
-
-
-            window.location.href =
-                "home.html";
-
-        } else {
-
-            error.textContent =
-                "E-mail ou senha incorretos.";
-
-            error.style.display = "block";
-        }
-    }
-
-
-    /* ================================
-       ENTER NOS CAMPOS
-    ================================= */
-
-    document.addEventListener(
-        "keydown",
-        function(event) {
-
-            if (
-                event.key === "Enter" &&
-                document
-                    .getElementById("loginForm")
-                    .classList.contains("active")
-            ) {
-
-                login();
-            }
-
-        }
-    );
+}
 
 </script>
 
 </body>
 </html>
-```
